@@ -1,0 +1,44 @@
+CREATE DATABASE db_lottery;
+SHOW DATABASES;
+SHOW TABLES;
+USE mysql;
+DESCRIBE USER;
+SELECT * FROM USER;
+
+CREATE USER usr_devuser IDENTIFIED BY 'DevPass@von24';
+GRANT ALL PRIVILEGES ON db_lottery.* TO usr_devuser IDENTIFIED BY 'DevPass@von24';
+
+CREATE TABLE db_lottery.tbl_lottery_users
+(
+    twitter_user varchar(20) NOT NULL,
+    reg_date date,
+    ip_address varchar(20),
+    PRIMARY KEY (twitter_user)
+);
+
+CREATE TABLE db_lottery.tbl_lottery_Draws
+(
+    draw_date date NOT NULL,
+    draw_type varchar(20) NOT NULL,
+    balls_signature varchar(20),
+    CONSTRAINT primaty_key_draw PRIMARY KEY (draw_date,draw_type)
+);
+
+CREATE TABLE db_lottery.tbl_lottery_numbers
+(
+    twitter_user varchar(20) NOT NULL,
+    draw_date date NOT NULL,
+    draw_type varchar(20) NOT NULL,
+    balls_signature varchar(20),
+    entry_Submition boolean,
+    CONSTRAINT primaty_key_pick PRIMARY KEY (twitter_user,draw_date,draw_type)
+);
+
+CREATE TABLE db_lottery.tbl_lottery_coverage
+(
+    balls_signature varchar(20) NOT NULL,
+    draw_date date NOT NULL,
+    draw_type varchar(20) NOT NULL,
+    Instances_Played int,
+    CONSTRAINT primaty_key_coverage PRIMARY KEY (balls_signature,draw_date,draw_type)
+);

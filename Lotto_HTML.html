@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="Lotto Combinations">
+		<meta name="keywords" content="HTML,CSS,JavaScript,PHP">
+		<meta name="author" content="BoyzazFather">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Compare your Lotto Numbers</title>
+		<!-- Helper Files
+			file:///C:/xampp/htdocs/LottoProject/Lotto_CSS.css
+			http://localhost/LottoProject/Lotto_HTML.html
+			http://localhost/LottoProject/Lotto_CSS.css
+			http://localhost/LottoProject/Lotto_JS.js
+			http://localhost/LottoProject/Lotto_PHP.php
+		-->
+		<!-- Fav Icons Files
+			<link rel="shortcut icon" href="">
+			<link rel="SHORTCUT ICON" HREF="/favicon.png">
+		--> 
+		<link rel="SHORTCUT ICON" HREF="favicon.ico">
+		<link rel="stylesheet" type="text/css" href="Lotto_CSS.css">		
+		<script language ="javascript" src="Lotto_JS_XHR_TestBench.js" type="text/javascript"></script>
+		<script language ="javascript" src="Lotto_JS_XHR_UltraModular.js" type="text/javascript"></script>
+		</script>
+	</head>
+	<body>
+		<div id="header">
+			<h1>Compare what are others thinking of your Numbers?</h1>
+			<br>
+			<h2>What if your chances reduce the more other's think the same numbers?</h2>
+		</div>		
+		<br>
+		<br>		
+		<div id="content">
+			<fieldset id="input">
+				<p>Select Your Numbers</p>
+				<form name='queryForm' action="#" onsubmit="return false;" method='POST'>
+					<!-- Old Code
+						action='\Billyz\Billy.php'
+						vs
+						action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"
+						submitRequest2Server(updateInnerElement,'combo_this',XHR,'Select', 'POST', 'http://localhost/LottoProject/Lotto_PHP.php',true,'application/x-www-form-urlencoded','UserName','Secret')
+
+					-->
+					<fieldset id="draw_settings">
+						<fieldset class='field_twitter_user'>
+							<label class='lable_twitter_user' for='twitter_user'>Your Twitter User Name: </label>
+							<br/>
+							<input type='text' class='twitter_user' name='twitter_user' placeholder='@twitter_user_name'/>					
+						</fieldset>
+							
+						<fieldset class='field_draw_type'>
+							<label class='lable_draw_type' for='draw_type'>Draw Date: </label>
+							<br/>
+							<select type='text' class='draw_type' name='draw_type' placeholder='Power Ball'>
+								<option value="1" selected>Power Ball</option>
+								<option value="2">National Lottery</option>
+								<option value="3">Daily Lottery</option>
+							</select>				
+						</fieldset>
+						
+						<fieldset class='field_draw_date'>
+							<label class='lable_draw_date' for='draw_date'>Draw Date: </label>
+							<br/>
+							<input type='date' class='draw_date' name='draw_date' placeholder='yyyy/mm/dd/mm'/>					
+						</fieldset>
+												
+						<fieldset class='label_Balls_Signature'>
+							<!-- *** Change to this at production ***
+								<input type='hidden' class='ball' name='ball_signature' placeholder='00-00-00-00-00-00'/>
+							-->
+							<label class='label_ball' for='ball_signature'>Ball Signature</label>
+							<br/>
+							<input type='text' class='ball_signature' name='ball_signature' placeholder='00-00-00-00-00-00'/>							
+						</fieldset>
+					</fieldset>
+
+					<fieldset class='field_balls'>
+						<legend>Punch The Balls You Think To Play</legend>
+						<div class='label_Balls_Set'>
+							<input type='text' class='ball' name='ball_1' placeholder='23'/>
+							<label class='label_ball' for='ball_1'>Ball #1</label>
+						</div>
+						<div class='label_Balls_Set'>
+							<input type='text' class='ball' name='ball_2' placeholder='2'/>
+							<label class='label_ball' for='ball_2'>Ball #2</label>
+						</div>
+						<div class='label_Balls_Set'>
+							<input type='text' class='ball' name='ball_3' placeholder='17'/>
+							<label class='label_ball' for='ball_3'>Ball #3</label>
+						</div>
+						<div class='label_Balls_Set'>
+							<input type='text' class='ball' name='ball_4' placeholder='20'/>
+							<label class='label_ball' for='ball_4'>Ball #4</label>
+						</div>
+						<div class='label_Balls_Set'>
+							<input type='text' class='ball' name='ball_5' placeholder='49'/>
+							<label class='label_ball' for='ball_5'>Ball #5</label>
+						</div>
+						<div class='label_Balls_Set'>
+							<input type='text' class='ball' name='ball_6' placeholder='40'/>
+							<label class='label_ball' for='ball_6'>Ball #6</label>
+						</div>
+					</fieldset>			
+					    
+					<!--
+						<input type='submit' class="button" value='Submit' onclick="http://localhost/LottoProject/Lotto_JS/submitRequest2Server(updateInnerElement,'combo_this',XHR,'Select', 'POST', 'http://localhost/LottoProject/Lotto_PHP.php',true,'application/x-www-form-urlencoded','UserName','Secret')"/>
+					-->
+					<fieldset class='Summit'>
+						<!--
+							<input type='submit' class='button' value='Submit' onclick='DB_Test(); return false;'/>	
+						-->						
+						<input type='submit' class='button' value='Submit' onclick='submitRequest2Server(); return false;'/>			
+					</fieldset>
+					
+					<hr/>	
+				</form>
+			</fieldset>
+			<br>
+			<fieldset class="balls_Signature_histtory">
+				<fieldset>
+					<legend>
+						Your Combination.
+					</legend>
+					<div id="combo_this" onload="Lotto_PHP_Class_DB_Talk2World.php">
+							<p>How Common is your Combination this instance</p>			
+					</div>
+					<div id="combo_specific"  onload="Lotto_PHP_Class_DB_Talk2World.php">
+						<p>How Common is your Combination specific instance</p>
+					</div>
+					<div id="combo_history">
+						<p>How Common is your Combination all instance</p>
+					</div>
+				</fieldset>
+				<br/>
+				<fieldset>
+					<legend>
+							Each Number.
+					</legend>
+					<div>
+						<p>Instances each number is played</p>
+					</div>
+					<div>
+						<p>Least Recurring Number</p>
+					</div>
+					<div>
+						<p>Most Recurring Number</p>
+					</div>
+				</fieldset>
+				<br/>
+				<fieldset>
+					<legend>
+							Least Played Combinations.
+					</legend>
+					<div>
+						<p>Never Played</p>
+					</div>
+					<div>
+						<p>Please Played</p>
+					</div>
+					<div>
+						<p>Most Played</p>
+					</div>
+				</fieldset>
+			</fieldset>
+		</div>
+		<br>
+	</body>
+	
+</html>

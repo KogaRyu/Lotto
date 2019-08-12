@@ -1,0 +1,106 @@
+body {
+	display: flex;
+	flex-direction: column;
+	width: auto;
+	height: 100vh;
+	background-color: green;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+}
+
+#content {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-items: center;
+	width: inherit;
+	height: auto;
+	background-color: brown;
+	padding: 10px 10px 10px 10px;
+	margin: 5px 5px 5px 5px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	flex-basis: auto;
+	height: auto;
+	background-color: pink;
+}
+
+.field_balls {	
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	background-color: rgb(121, 136, 38);
+}
+
+.label_Balls_Set {	
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	width: 10vp;
+	justify-content: center;
+	justify-items: center;
+	background-color: rgb(44, 38, 136);
+	border: 0.5px black solid;
+	padding: 5px 5px 5px 5px;
+}
+
+.label_Balls_Signature {	
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	justify-items: center;
+	width: 150px;
+	background-color: rgb(105, 38, 136);
+	border: 0.5px black solid;
+	padding: 5px 5px 5px 5px;
+}
+
+.ball {
+	justify-items: center;
+	justify-content: center;
+	text-align: center;	
+	width: 25px;
+	height: 25px;
+	background-color: rgb(38, 89, 136);
+	border-radius: 25px 25px 25px 25px;
+}
+
+.label_ball {
+	justify-items: center;
+	text-align: center;
+	padding: 5px 5px 5px 5px;
+	background-color: rgb(62, 60, 110);
+}
+
+.ball:nth-child(2n+0) {
+	background-color: antiquewhite;
+}
+
+.ball:nth-child(2n+1) {
+	background-color: aqua;
+}
+
+.button {
+	width: 10vw;
+	height: auto;
+}
+
+#combo_this {
+	background-color: blueviolet;
+	height: 80px;
+}
+
+.balls_Signature_history {
+	display: flex;
+	flex-direction: row;
+}
+
+#draw_settings {
+	display:flex;
+	flex-direction: row;
+}

@@ -1,0 +1,12 @@
+Classs Connect # Connection Object
+Class Statement # SQL Statement
+Class Prepare # Prepare & Bind
+Class Results # Execute & Results
+Class OutPut # Grid or Form
+
+Class useAll
+
+# On Page Load: List Stats of interest & No Probability
+# On Submit Data: User ID - Check Already Exist else Create.
+# On Submit Data: Draw - Check Already Exist else Create.
+# After Submit Data: List Stats of interest & Probability

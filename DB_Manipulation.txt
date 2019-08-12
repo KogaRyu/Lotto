@@ -1,0 +1,14 @@
+SELECT *
+FROM db_lottery.tbl_lottery_users as usr
+WHERE usr.twitter_user = "@boyzazfather";
+
+UPDATE db_lottery.tbl_lottery_users as usr
+SET usr.reg_date='2019/03/07'
+WHERE usr.twitter_user = "@boyzazfather";
+
+INSERT INTO db_lottery.tbl_lottery_users(`twitter_user`,`reg_date`, `ip_address`)
+VALUES ("@maxthegorilla","2019/07/07","127.0.0.0");
+
+DELETE *
+FROM db_lottery.tbl_lottery_users as usr
+WHERE usr.twitter_user = "@boyzazfather";
