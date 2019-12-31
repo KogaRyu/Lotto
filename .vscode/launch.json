@@ -31,9 +31,10 @@
             "name": "Launch Chrome against localhost",
             //"url": "http://localhost:8080",
             //"url": "http://localhost/LottoCoverage/",
-            "webRoot": "${workspaceFolder}"
+            "url": "http://localhost/LottoCoverage/Lotto_HTML.html",
+            //"webRoot": "${workspaceFolder}"
         },
-        //http://localhost/LottoCoverage/Lotto_HTML.html
+        
         {
             "type": "chrome",
             "request": "launch",

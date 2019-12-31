@@ -7,72 +7,175 @@ body {
 	padding: 0px 0px 0px 0px;
 	margin: 0px 0px 0px 0px;
 }
+#navi_bar {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-items: center;
+	justify-content: center;
+	width: auto;
+	height: auto;
+	background-color: rgb(32, 144, 218);
+	padding: 5px 5px 5px 5px;
+	margin: 5px 5px 5px 5px;
+}
+.navi_item {
+	display: flex;
+	flex-wrap: space;
+	justify-items: center;
+	border: 5px bold peru dotted;
+	background-color: rgb(14, 235, 80);
+	padding: 5px 5px 5px 5px;
+	margin: 5px 5px 5px 5px;
+}
 
-#content {
+#header {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
 	justify-items: center;
 	width: inherit;
 	height: auto;
-	background-color: brown;
+	background-color: goldenrod;
+	padding: 5px 5px 5px 5px;
+	margin: 5px 5px 5px 5px;
+}
+
+#heading {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-items: center;
+	width: inherit;
+	height: auto;
+	background-color: powderblue;
+}
+
+#banner {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-items: center;
+	width: inherit;
+	height: auto;
+	background-color: grey;
+}
+
+#body_content {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-items: center;
+	width: inherit;
+	height: auto;
+	background-color: palevioletred;
 	padding: 10px 10px 10px 10px;
 	margin: 5px 5px 5px 5px;
 }
 
-form {
+.super_container {	
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: inherit;
+	height: auto;
+	padding: 2px 2px 2px 2px;
+	margin: 2px 2px 2px 2px;
+	background-color: rgb(19, 219, 233);
+}
+
+.content_container {	
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	width: inherit;
+	height: auto;
+	padding: 2px 2px 2px 2px;
+	margin: 2px 2px 2px 2px;
+	background-color: rgb(233, 26, 19);
+}
+
+#form_play {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
 	flex-basis: auto;
+	width: auto;	
 	height: auto;
+	padding: 3px 3px 3px 3px;
+	margin: 3px 3px 3px 3px;
 	background-color: pink;
 }
 
-.field_balls {	
+.form_segment {	
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	background-color: rgb(121, 136, 38);
+	width: auto;
+	height: auto;
+	justify-content: center;
+	justify-items: center;
+	border: 0.5px solid red;
+	padding: 2px 2px 2px 2px;
+	margin: 5px 5px 5px 5px;
+	background-color: rgb(206, 241, 6);
 }
 
-.label_Balls_Set {	
+.form_field_draw_details {	
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
-	width: 10vp;
+	width: inherit;
+	height: fit-content;
 	justify-content: center;
 	justify-items: center;
-	background-color: rgb(44, 38, 136);
-	border: 0.5px black solid;
 	padding: 5px 5px 5px 5px;
+	margin: 5px 5px 5px 5px;
+	background-color: rgb(161, 169, 204);
 }
 
-.label_Balls_Signature {	
+#input_field_ball_set {	
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	width: auto;
+	height: auto;
 	justify-content: center;
 	justify-items: center;
-	width: 150px;
-	background-color: rgb(105, 38, 136);
-	border: 0.5px black solid;
+	padding: 3px 3px 3px 3px;
+	margin: 3px 3px 3px 3px;
+}
+
+.container_label_balls {	
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	width: auto;
+	height: auto;
+	justify-content: center;
+	justify-items: center;
+	background-color: rgb(44, 38, 136);
+	border: 2px black solid;
 	padding: 5px 5px 5px 5px;
+	margin: 5px 5px 5px 5px;
 }
 
 .ball {
 	justify-items: center;
 	justify-content: center;
+	justify-self: center;
 	text-align: center;	
-	width: 25px;
-	height: 25px;
+	width: 70px;
+	height: 70px;
 	background-color: rgb(38, 89, 136);
 	border-radius: 25px 25px 25px 25px;
 }
 
 .label_ball {
+	justify-content: center;
 	justify-items: center;
 	text-align: center;
+	color: antiquewhite;
 	padding: 5px 5px 5px 5px;
 	background-color: rgb(62, 60, 110);
 }
@@ -85,22 +188,11 @@ form {
 	background-color: aqua;
 }
 
-.button {
-	width: 10vw;
-	height: auto;
-}
-
 #combo_this {
 	background-color: blueviolet;
-	height: 80px;
 }
 
 .balls_Signature_history {
 	display: flex;
-	flex-direction: row;
-}
-
-#draw_settings {
-	display:flex;
 	flex-direction: row;
 }
