@@ -3,9 +3,9 @@
 
     class DB_FetchResults {
         # Use on the calling File: include("class_lib.php");
-        private $dbQueryResults=NULL;
+        private $dbQueryResults;
         
-        function __construct($dbSqlStatement=NULL,$dbFetchType='FETCH_ASSOC') {        
+        function __construct($dbSqlStatement,$dbFetchType='FETCH_ASSOC') {        
             $this->setQueryResults($dbSqlStatement,$dbFetchType);
         }
 

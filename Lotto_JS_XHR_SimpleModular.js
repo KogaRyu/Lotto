@@ -1,12 +1,13 @@
 // submitRequest2Server(function2Excecute,elementIdName,XHR,queryString2Server, sendMethod ="GET", serverFileURL="getuser.php?q=",asyncSync=true,contentType="application/x-www-form-urlencoded",userName='',passWord='')
 // submitRequest2Server(updateInnerElement,'combo_this',XHR,'Select', 'GET', 'getuser.php?q=',true,'application/x-www-form-urlencoded','UserName','Secret')
-// var XHR=null;
+// let XHR=null;
 // XHR = XHR_Connection();
 
-function submitForm() { 
-    var xhr; 
+function submitForm() {
+    let url='Lotto_PHP_Class_DB_Talk2World.php';
+    let xhr=null; 
     try {
-        xhr = new ActiveXObject('Msxml2.XHR');
+        xhr = new XMLHttpRequest();
     }
     catch (e) {
         try {
@@ -14,7 +15,7 @@ function submitForm() {
         }
         catch (e2) {
           try {
-              xhr = new XHRRequest();
+              xhr = new ActiveXObject('Msxml2.XHR');
             }
           catch (e3) {
               xhr = false;
@@ -24,16 +25,17 @@ function submitForm() {
    
     xhr.onreadystatechange  = function() { 
          if(xhr.readyState  == 4) {
-            var combo_this = document.getElementById("combo_this").firstChild();
-            if(xhr.status  == 200) {
-                combo_this.innerHTML="Received:"  + xhr.responseText;
+            let myDocComboThis = document.getElementById("combo_this");
+            if(this.status  == 200) {
+                myDocComboThis.innerHTML="Received:"  + this.responseText;
             }                 
             else {
-                combo_this.innerHTML="Error code " + xhr.status;
+                myDocComboThis.innerHTML="Error code " + this.status;
             }                
         }
     }; 
  
-   xhr.open("GET", "Lotto_PHP.php",  true); 
-   xhr.send(null); 
+   xhr.open("POST", url, true);
+   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   xhr.send(); 
 } 

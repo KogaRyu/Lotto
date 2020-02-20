@@ -1,15 +1,38 @@
 <?php
     // include_once('Lotto_PHP_DB_Config.php');
     include_once("Lotto_PHP_Class_DB_Active.php");
-
+    include_once("Lotto_PHP_Class_DB_ShortCut.php");    
+    include_once("Lotto_PHP_Class_DB_Output.php");
     function POutput() {
         echo "Hello PHP.<br>";
-
         #$myActive=New DB_Active();
         echo "Bye PHP.\n";
-    }    
+    }  
     
-    POutput();
+    function POutputClass() {
+        echo "Hello PHP Class Creation.<br>";
+        $myDB_Class= New DB_Active();
+        echo "Hello PHP Class Output.<br>";
+        echo $myDB_Class->getOutput;        
+        #$myActive=New DB_Active();
+        echo "Bye PHP Class E.\n";
+    } 
+   
+    function POutputShort() {
+        echo "<br> Hello PHP Ext PDO Creation.<br>";
+        $extPDO = New EXT_PDO();
+        echo "Hello PHP Ext PDO Query.<br>";
+        $results = $extPDO->run('Select * From tbl_lottery_Draws')->fetchAll();
+        echo "Hello PHP Ext PDO Output.<br>";
+        $output = New DB_Output($results);
+        #$queryOutputout = $results->fetchAll();
+        echo $output->getOutput().".<br>";
+        #$output = $extPDO->fetch();      
+        #$myActive=New DB_Active();
+        echo "Bye PHP Ext PDO.<br>";
+    }
+
+    POutputShort();
 
 /*  // Helper Functions
     function withinRange($inputVal, $minVal=1,$maxVal=49) {

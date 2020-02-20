@@ -5,17 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         
-        {
+/*         {            
+            "name": "Launch Program",
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
             "program": "${workspaceFolder}/app.js"
-        },
+        }, */
         {
             "name": "Listen for XDebug",
             "type": "php",
             "request": "launch",
-            "port": 9000,
+            "port": 9001,
         },
         {
             "name": "Launch currently open script",
@@ -32,15 +32,15 @@
             //"url": "http://localhost:8080",
             //"url": "http://localhost/LottoCoverage/",
             "url": "http://localhost/LottoCoverage/Lotto_HTML.html",
-            //"webRoot": "${workspaceFolder}"
-        },
-        
+            "webRoot": "${workspaceFolder}"
+        }
+        /* ,        
         {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome from the file system",
             "file": "${workspaceFolder}"
             //${workspaceFolder}/Paint.html
-        }
+        } */
     ]
 }

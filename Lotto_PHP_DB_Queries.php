@@ -1,14 +1,18 @@
 <?php
+
 return
 [# Array of Query Params      
-    'inst_1' =>  [
-        'type'      =>  'insert',
-        'params'    =>  [ # Bind Params
-            ':param_1' => 'param_1',
-            ':param_2' => 'param_2',
-            ':param_3' => 'param_3',
-            ':param_4' => 'param_4',
-            ':param_5' => 'param_5'
+    'SQL_Select_1' =>  [
+        'table_name'         =>  'tbl_lottery_numbers',
+        'query_2_run'     =>  'SQL_Select_1',
+        'results_2_output'=>  'Results_2_Table_1',
+        'query_type'    =>  'Select',
+        'query_params'  =>  [ # Bind Params
+            ':twitter_user'     => 'twitter_user',
+            ':draw_date'        => 'draw_date',
+            ':draw_type'        => 'draw_type',
+            ':entry_submition'  => 'entry_submition',
+            ':param_5'          => 'param_5'
         ]
     ],
     'inst_2' =>  [

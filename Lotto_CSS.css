@@ -1,76 +1,209 @@
 body {
 	display: flex;
 	flex-direction: column;
-	width: auto;
+	width: inherit;
 	height: 100vh;
 	background-color: green;
-	padding: 0px 0px 0px 0px;
-	margin: 0px 0px 0px 0px;
+	padding: 1px;
+	margin: 1px;
 }
 #navi_bar {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	justify-items: center;
-	justify-content: center;
-	width: auto;
+	width: inherit;
 	height: auto;
 	background-color: rgb(32, 144, 218);
 	padding: 5px 5px 5px 5px;
 	margin: 5px 5px 5px 5px;
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
 }
 .navi_item {
 	display: flex;
-	flex-wrap: space;
-	justify-items: center;
+	flex-wrap: space;	
 	border: 5px bold peru dotted;
 	background-color: rgb(14, 235, 80);
 	padding: 5px 5px 5px 5px;
-	margin: 5px 5px 5px 5px;
+	margin: 5px 5px 5px 5px;	
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
 }
 
 #header {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
-	justify-items: center;
 	width: inherit;
 	height: auto;
 	background-color: goldenrod;
 	padding: 5px 5px 5px 5px;
 	margin: 5px 5px 5px 5px;
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
 }
 
 #heading {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	justify-items: center;
 	width: inherit;
 	height: auto;
 	background-color: powderblue;
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
 }
 
 #banner {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	justify-items: center;
 	width: inherit;
 	height: auto;
 	background-color: grey;
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
 }
 
 #body_content {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
-	justify-items: center;
 	width: inherit;
 	height: auto;
 	background-color: palevioletred;
-	padding: 10px 10px 10px 10px;
+	padding: 10px;
+	margin: 5px;
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
+}
+
+#form_play {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	flex-basis: auto;
+	width: inherit;	
+	height: auto;
+	padding: 3px 3px 3px 3px;
+	margin: 3px 3px 3px 3px;
+	background-color: pink;
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
+}
+
+.form_segment {	
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: inherit;
+	height: auto;
+	border: 0.5px solid red;
+	padding: 2px 2px 2px 2px;
 	margin: 5px 5px 5px 5px;
+	background-color: rgb(206, 241, 6);
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
+}
+
+.form_field_draw_details {	
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	width: inherit;
+	height: auto;
+	padding: 5px 5px 5px 5px;
+	margin: 5px 5px 5px 5px;
+	background-color: rgb(161, 169, 204);
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
+}
+
+#input_field_ball_set {	
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: inherit;
+	height: auto;
+	padding: 3px 3px 3px 3px;
+	margin: 3px 3px 3px 3px;
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
+}
+
+.container_label_balls {	
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	width: inherit;
+	height: auto;
+	background-color: rgb(44, 38, 136);
+	border: 2px black solid;
+	padding: 5px 5px 5px 5px;
+	margin: 5px 5px 5px 5px;
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
+}
+
+.ball {
+	width: 70px;
+	height: 70px;
+	background-color: rgb(38, 89, 136);
+	border-radius: 25px 25px 25px 25px;
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
+}
+
+.label_ball {
+	color: antiquewhite;
+	padding: 5px 5px 5px 5px;
+	background-color: rgb(62, 60, 110);
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
+}
+
+#balls_Signature_history {
+	display: flex;
+	flex-direction: row;
 }
 
 .super_container {	
@@ -79,9 +212,14 @@ body {
 	flex-wrap: wrap;
 	width: inherit;
 	height: auto;
-	padding: 2px 2px 2px 2px;
-	margin: 2px 2px 2px 2px;
+	padding: 2px;
+	margin: 2px;
 	background-color: rgb(19, 219, 233);
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
 }
 
 .content_container {	
@@ -89,110 +227,91 @@ body {
 	flex-direction: column;
 	flex-wrap: wrap;
 	width: inherit;
-	height: auto;
-	padding: 2px 2px 2px 2px;
-	margin: 2px 2px 2px 2px;
+	height: auto;	
+	border: 2px black dotted;
 	background-color: rgb(233, 26, 19);
-}
-
-#form_play {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
-	flex-basis: auto;
-	width: auto;	
-	height: auto;
-	padding: 3px 3px 3px 3px;
-	margin: 3px 3px 3px 3px;
-	background-color: pink;
-}
-
-.form_segment {	
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	width: auto;
-	height: auto;
+	padding: 2px;
+	margin: 2px;
 	justify-content: center;
 	justify-items: center;
-	border: 0.5px solid red;
-	padding: 2px 2px 2px 2px;
-	margin: 5px 5px 5px 5px;
-	background-color: rgb(206, 241, 6);
-}
-
-.form_field_draw_details {	
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
-	width: inherit;
-	height: fit-content;
-	justify-content: center;
-	justify-items: center;
-	padding: 5px 5px 5px 5px;
-	margin: 5px 5px 5px 5px;
-	background-color: rgb(161, 169, 204);
-}
-
-#input_field_ball_set {	
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	width: auto;
-	height: auto;
-	justify-content: center;
-	justify-items: center;
-	padding: 3px 3px 3px 3px;
-	margin: 3px 3px 3px 3px;
-}
-
-.container_label_balls {	
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	width: auto;
-	height: auto;
-	justify-content: center;
-	justify-items: center;
-	background-color: rgb(44, 38, 136);
-	border: 2px black solid;
-	padding: 5px 5px 5px 5px;
-	margin: 5px 5px 5px 5px;
-}
-
-.ball {
-	justify-items: center;
-	justify-content: center;
-	justify-self: center;
-	text-align: center;	
-	width: 70px;
-	height: 70px;
-	background-color: rgb(38, 89, 136);
-	border-radius: 25px 25px 25px 25px;
-}
-
-.label_ball {
-	justify-content: center;
-	justify-items: center;
+	align-items: center;
+	align-content: stretch;
 	text-align: center;
-	color: antiquewhite;
-	padding: 5px 5px 5px 5px;
-	background-color: rgb(62, 60, 110);
+	
 }
 
-.ball:nth-child(2n+0) {
+.arch_history_container{
+	display: flex;
+	flex-direction: column;
+	border: 2px black dashed;
+	width: inherit;
+	padding: 1px;
+	margin: 5px;
+	justify-content: left;
+	justify-items: left;
+	align-items: left;
+	align-content: left;
+	text-align: left;
+}
+.history_container{
+	display: flex;
+	flex-direction: column;
+	width: inherit;
+	border: 2px black solid;
+	padding: 0.5px;
+	margin: 5px;
+	justify-content: left;
+	justify-items: left;
+	align-items: left;
+	align-content: left;
+	text-align: left;
+}
+.big_header{
+	font-weight: bolder;
+	width: inherit;
+	height: auto;
+	border-left: 0.9px solid black;
+	padding:0.5px;
+	margin: 0.2px;
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: stretch;
+	text-align: center;
+}
+.small_header{
+	font-style: italic;
+	font-weight: bold;
+	width: inherit;
+	height: auto;
+	border-bottom: 02px double black;
+	padding:0.5px;
+	margin: 0.2px;
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: center;
+	text-align: center;
+}
+.inner_box {
+	justify-content: left;
+	justify-items: left;
+	align-items: left;
+	align-content: left;
+	text-align: left;
+}
+.inner_box:nth-child(1n+0) {
+	background-color: rgba(223, 247, 10, 0.11);
+}
+.inner_box:nth-child(2n+0) {
+	background-color: rgba(23, 231, 75, 0.808);
+}
+.ball:nth-child(1n+0) {
 	background-color: antiquewhite;
 }
-
-.ball:nth-child(2n+1) {
+.ball:nth-child(2n+0) {
 	background-color: aqua;
 }
-
 #combo_this {
 	background-color: blueviolet;
-}
-
-.balls_Signature_history {
-	display: flex;
-	flex-direction: row;
 }

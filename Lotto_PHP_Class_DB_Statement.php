@@ -4,21 +4,22 @@ include_once("Lotto_PHP_Class_DB_Connection.php");
 
 class DB_Statement {
     # Use on the calling File: include("class_lib.php");
-    private $dbSqlStatement=NULL;
+    private $dbSqlStatement;
     private $resultsString;
     private $sqlString;        
-    private $currentTable=NULL;
+    private $currentTable;
 
-    function __construct($dbConnection=NULL,$inputSettings=[]) {            
-        $this->SQL_Query2Run($dbConnection,$inputSettings);
+    function __construct($dbConnection=NULL,$inputSettings) {            
+        $this->SQL_Query_2_Run($dbConnection,$inputSettings);
     }
 
     private function setInputSettings($inputSettings){
 
     }
 
-    private function SQL_Query2Run($dbConnection,$inputSettings) {
-        $query2run=$inputSettings['query2Run'];
+    private function SQL_Query_2_Run($dbConnection,$inputSettings) {
+        $inputSettings=$inputSettings->getMainSection();
+        $query2run=$inputSettings['query_2_run'];
         switch ($query2run) {
             case 'SQL_Select_1':
                 $this->SQL_Select($dbConnection,$inputSettings); # CRUD
@@ -36,48 +37,44 @@ class DB_Statement {
         }
     }
 
-    private function SQL_Select($dbConnection=NULL,$inputSettings,$Select2Execute=1) {
+    private function SQL_Select($dbConnection=NULL,$inputSettings="",$Select2Execute=1) {
+        $queryParams=$inputSettings['query_params'];
         $this->currentTable= $inputSettings['table_name'];
         if ($Select2Execute==1 || $Select2Execute==2) {
             $this->sqlString=
-                "SELECT `twitter_user`,`draw_date`, `draw_type`, COUNT(`balls_signature`)
-                FROM $this->currentTable
-                WHERE draw_date=:draw_date AND draw_type=:draw_type
-                ORDER BY `twitter_user`,`draw_date`, `draw_type`,balls_signature DESC
-                ";
+                "SELECT draw_date,draw_type,COUNT(balls_signature) AS signatures FROM $this->currentTable WHERE draw_date=:draw_date AND draw_type=:draw_type GROUP BY 'draw_date', 'draw_type','balls_signature' DESC;";
         }
         elseif ($Select2Execute==3) {
             $this->sqlString=
-                "SELECT `twitter_user`,`draw_date`, `draw_type`, COUNT(`balls_signature`)
-                FROM $this->currentTable
-                WHERE draw_date=:draw_date AND draw_type=:draw_type
-                ORDER BY balls_signature DESC";
+                "SELECT 'twitter_user','draw_date', 'draw_type', COUNT('balls_signature') FROM $this->currentTable WHERE 'draw_date'=:draw_date AND 'draw_type'=:draw_type ORDER BY 'twitter_user','draw_date', 'draw_type','balls_signature' DESC;";
         }
         else {
-            $this->sqlString="SELECT `twitter_user`,`draw_date`, `draw_type`, COUNT(`balls_signature`) FROM $this->currentTable WHERE draw_date=:draw_date AND draw_type=:draw_type ORDER BY balls_signature DESC";
+            $this->sqlString="SELECT 'twitter_user','draw_date', 'draw_type', COUNT('balls_signature') FROM $this->currentTable WHERE 'draw_date'=:draw_date AND 'draw_type'=:draw_type;";
         } #Remember to Sort by Draw Date & Type
         
         $this->sqlStatement=$dbConnection->prepare($this->sqlString);        
         
-        $this->sqlStatement->bindParam(':twitter_user',$inputSettings['twitter_user']);
-        $this->sqlStatement->bindParam(':draw_date',$inputSettings['draw_date']);
-        $this->sqlStatement->bindParam(':draw_type',$inputSettings['draw_type']);
+        //$this->sqlStatement->bindParam(':twitter_user',$queryParams[':twitter_user']);
+        $this->sqlStatement->bindParam(':draw_date',$queryParams[':draw_date']);
+        $this->sqlStatement->bindParam(':draw_type',$queryParams[':draw_type']);
+        //$this->sqlStatement->bindParam(':balls_signature',$inputSettings['balls_signature']);
         $this->sqlStatement->execute();
     }
 
-    private function SQL_Insert($dbConnection,$inputSettings) {            
+    private function SQL_Insert($dbConnection,$inputSettings) {
+        $queryParams=$inputSettings['query_params'];
+        $this->currentTable= $inputSettings['table_name'];            
         try {
             # $ballPlanned;
-            $this->currentTable= $inputSettings['table_name'];
             $this->sqlString="INSERT INTO $this->currentTable (`twitter_user`,`draw_date`, `draw_type`, `balls_signature`) VALUES (:twitter_user, :draw_date, :draw_type, :balls_signature)";
             $this->sqlStatement=$dbConnection->prepare($this->sqlString); # If Prepared, Change $this->connection to $this->sqlStatement?
             
             # *** Begin the transaction ***
             $dbConnection->beginTransaction();
-            $this->sqlStatement->bindParam(':twitter_user',$inputSettings['twitter_user']);
-            $this->sqlStatement->bindParam(':draw_date',$inputSettings['draw_date']);
-            $this->sqlStatement->bindParam(':draw_type',$inputSettings['draw_type']);
-            $this->sqlStatement->bindParam(':balls_signature',$inputSettings['balls_signature']);
+            $this->sqlStatement->bindParam(':twitter_user',$queryParams['twitter_user']);
+            $this->sqlStatement->bindParam(':draw_date',$queryParams['draw_date']);
+            $this->sqlStatement->bindParam(':draw_type',$queryParams['draw_type']);
+            $this->sqlStatement->bindParam(':balls_signature',$queryParams['balls_signature']);
             $this->sqlStatement->execute();
             #$this->sqlStatement->execute($inputSettings['balls_signature']);
 
@@ -96,6 +93,61 @@ class DB_Statement {
 
     public function getStatement() {
         return $this->dbSqlStatement;
+    }
+
+    // cleaning functions, adapt these
+    function cleanHtmlInput($htmlInput) {
+        try {
+            //code...
+            if( isset($htmlInput) && $htmlInput != '' && $htmlInput != 'none"' ) {
+                $htmlInput = trim($htmlInput);
+                $htmlInput = stripslashes($htmlInput);
+                $htmlInput = htmlspecialchars($htmlInput);
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            echo "Error: ".$th->$php_errormsg;
+            exit();
+        }       
+        return $htmlInput;
+    }
+
+    function validateInput($inputSettings) {
+        $drawDate = $this->makeAssocInput('drawDate','POST');            
+        $drawType = $this->makeAssocInput('drawType','POST');
+        $userName = $this->makeAssocInput('userName','POST');
+
+        $myNumbersKeys = array('ball_signature');
+        $myNumbers = $this->makeAssocInput($myNumbersKeys);
+
+        foreach ($myNumbersKeys as $key => $value) {
+            $myNumbers = $this->cleanHtmlInput($myNumbersKeys);
+        }
+
+        $listInputs = Array('settingsInput' => $inputSettings,'myNumbersInputs' => $myNumbers);
+    }
+
+    function makeAssocInput($keyAssocs, $postMethod = 'POST') {            
+        $holder = array();
+        if ($postMethod == 'POST') {
+            foreach ($keyAssocs as $keyAssoc) {
+                $assocVal = $this->cleanHtmlInput($_POST[$keyAssoc]);
+                array_push($holder,array($keyAssoc => $assocVal));                    
+            }                
+        }
+        else if ($postMethod == 'GET'){
+            foreach ($keyAssocs as $keyAssoc) {
+                $assocVal = $this->cleanHtmlInput($_GET[$keyAssoc]);
+                array_push($holder,array($keyAssoc=>$assocVal));                    
+            }
+        }
+        else {
+            foreach ($keyAssocs as $keyAssoc) {
+                $assocVal = $this->cleanHtmlInput($_REQUEST[$keyAssoc]);
+                array_push($holder,array($keyAssoc => $assocVal));                    
+            }
+        }  
+        return $holder;                       
     }
 }
 ?>

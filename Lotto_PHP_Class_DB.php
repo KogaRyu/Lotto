@@ -21,11 +21,11 @@
             $this->Connect();
             $mytableName="tblnumbersplanned";
             $inputSettings=array('drawDate'=>'localhost','drawType'=>'db_lottery','userName'=>'usr_devuser');
-            $ballsPlanned=array('ball_1'=>'','ball_2'=>'','ball_3'=>'','ball_4'=>'','ball_5'=>'','ball_6'=>'r');
-            validateInput($inputSettings);
-            validateInput($ballsPlanned);
-            $this->SQL_Select($mytableName, $inputSettings, $myNumbers); # CRUD                        
-            $this->SQL_Insert($mytableName, $inputSettings, $myNumbers); # CRUD            
+            $ballsPlanned=array('ball_1'=>'','ball_2'=>'','ball_3'=>'','ball_4'=>'','ball_5'=>'','ball_6'=>'');
+            $this->validateInput($inputSettings);
+            $this->validateInput($ballsPlanned);
+            $this->SQL_Select_1($mytableName, $inputSettings, $ballsPlanned); # CRUD                        
+            $this->SQL_Insert($mytableName, $inputSettings, $ballsPlanned); # CRUD            
             $this->QueryResults();
             $this->Results2Table(); # Or
             # $this->Results2JSon(); # Or Whatever
@@ -34,10 +34,10 @@
 
         private function cleanHtmlInput($htmlInput) {
             if( isset($htmlInput) ) {
-                $htmlInput=trim($htmlInput);
-                if( $htmlInput!='' && $htmlInput!='none"' ) {
-                    $htmlInput=stripslashes($htmlInput);
-                    $htmlInput=htmlspecialchars($htmlInput);
+                $htmlInput = trim($htmlInput);
+                if( $htmlInput != '' && $htmlInput != 'none"' ) {
+                    $htmlInput = stripslashes($htmlInput);
+                    $htmlInput = htmlspecialchars($htmlInput);
                 }
                 else {
                     exit();
@@ -52,35 +52,41 @@
 
         function validateInput($drawDate,$drawType,$userName,$myNumbers) {
 
-            $inputSettings = array('drawDate'=>$drawDate,'drawType'=>$drawType,'userName'=>$userName);
-            $drawDate=makeAssocInput('drawDate');            
-            $drawType= makeAssocInput('drawType');
-            $userName= makeAssocInput('userName');
+            $inputSettings = array('drawDate' => $drawDate,'drawType' => $drawType,'userName' => $userName);
+            $drawDate = $this->makeAssocInput('drawDate');            
+            $drawType = $this->makeAssocInput('drawType');
+            $userName = $this->makeAssocInput('userName');
 
-            $myNumbersKeys= array('ball_1','ball_2','ball_3','ball_4','ball_5','ball_6');
-            $myNumbers=makeAssocInput($myNumbersKeys);
+            $myNumbersKeys = array('ball_1','ball_2','ball_3','ball_4','ball_5','ball_6');
+            $myNumbers = $this->makeAssocInput($myNumbersKeys);
 
             foreach ($myNumbersKeys as $key => $value) {
-                $myNumbers=cleanHtmlInput($myNumbersKeys);
+                $myNumbers = $this->cleanHtmlInput($myNumbersKeys);
             }
 
-            $listInputs=Array('settingsInput'=>$inputSettings,'myNumbersInputs'=>$myNumbers);
+            $listInputs = Array('settingsInput' => $inputSettings,'myNumbersInputs' => $myNumbers);
         }
 
-        function makeAssocInput($keyAssocs, $postMethod='POST') {            
-            $holder=array();
+        function makeAssocInput($keyAssocs, $postMethod = 'POST') {            
+            $holder = array();
             if ($postMethod == 'POST') {
                 foreach ($keyAssocs as $keyAssoc) {
-                    $assocVal=cleanHtmlInput($_POST[$keyAssoc]);
-                    array_push($holder,array($keyAssoc=>$assocVal));                    
+                    $assocVal = $this->cleanHtmlInput($_POST[$keyAssoc]);
+                    array_push($holder,array($keyAssoc => $assocVal));                    
                 }                
+            }
+            else if ($postMethod == 'GET'){
+                foreach ($keyAssocs as $keyAssoc) {
+                    $assocVal = $this->cleanHtmlInput($_GET[$keyAssoc]);
+                    array_push($holder,array($keyAssoc => $assocVal));                    
+                }
             }
             else {
                 foreach ($keyAssocs as $keyAssoc) {
-                    $assocVal=cleanHtmlInput($_GET[$keyAssoc]);
-                    array_push($holder,array($keyAssoc=>$assocVal));                    
+                    $assocVal = $this->cleanHtmlInput($_REQUEST[$keyAssoc]);
+                    array_push($holder,array($keyAssoc => $assocVal));                    
                 }
-            } 
+            }  
             return $holder;                       
         }
 
