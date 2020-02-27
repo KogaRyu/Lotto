@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Compare your Lotto Numbers</title>
 		<!-- Helper Files
-			file:///C:/xampp/htdocs/LottoProject/Lotto_CSS.css
+			file:///C:/xampp/htdocs /LottoProject/Lotto_CSS.css
 			http://localhost/LottoProject/Lotto_HTML.html
 			http://localhost/LottoProject/Lotto_CSS.css
 			http://localhost/LottoProject/Lotto_JS.js
@@ -23,12 +23,6 @@
 		<script language ="javascript" src="Lotto_JS_XHR_TestBench.js" type="text/javascript"></script>
 		<script language ="javascript" src="Lotto_JS_XHR_SimpleModular.js" type="text/javascript"></script>
 		<script language ="javascript" src="Lotto_JS_XHR_UltraModular.js" type="text/javascript"></script>
-		
-		<script>			
-			function orderDigits() {
-				document.getElementsByName("ball_signature").value = '2345';
-			}
-		</script>
 	</head>
 	<body onload="submitRequest2Server()">
 		<div id="header">
@@ -43,106 +37,96 @@
 				</div>
 				<div id="banner">
 					<h2>What if your chances reduce the more other's think the same numbers?</h2>
-				</div>		
+				</div>
 			</div>
-		</div>		
+		</div>
 		<div id="body_content">
 			<div class="content_container" id="play_input">
 				<p>Select Your Numbers</p>
 				<form name='queryForm' id="form_play" action="#" onsubmit="return false;" method='POST'>					
 					<div class='form_segment' id='draw_settings'>
-						<div class='form_field_draw_details' id='field_twitter_user'>
-							<label class='label_ball' for='twitter_user'>Your Twitter User Name: </label>
+						<div class='form_field_draw_details' id = 'field_twitter_user'>
+							<label class='label_ball' for = 'twitter_user'>Your Twitter User Name: </label>
 							<br/>
-							<input type='text' class='twitter_user' name='twitter_user' placeholder='@twitter_user_name'/>					
+							<input type='text' class = 'twitter_user' name = 'twitter_user' value = '@twitter_user_name'/>					
 						</div>
-						
 						<div class='form_field_draw_details' id='field_draw_type'>
 							<label class='label_ball' for='draw_type'>Draw Date: </label>
 							<br/>
-							<select type='text' class='draw_type' name='draw_type' placeholder='Power Ball'>
+							<select type='text' class='draw_type' name='draw_type'>
 								<option value="1" selected>Power Ball</option>
 								<option value="2">National Lottery</option>
 								<option value="3">Daily Lottery</option>
 							</select>				
-						</div>
-						
+						</div>						
 						<div class='form_field_draw_details' id='field_draw_date'>
 							<label class='label_ball' for='draw_date'>Draw Date: </label>
 							<br/>
 							<input type='date' class='draw_date' name='draw_date' placeholder='yyyy/mm/dd/mm'/>					
-						</div>
-												
+						</div>											
 						<div class='form_field_draw_details' id='label_Balls_Signature'>
 							<!-- *** Change to this at production ***
 								<input type='hidden' class='ball' name='ball_signature' placeholder='00-00-00-00-00-00'/>
 							-->
 							<label class='label_ball' for='ball_signature'>Ball Signature</label>
 							<br/>
-							<input type='text' class='ball_signature' name='ball_signature' placeholder='00-00-00-00-00-00'/>							
+							<input type='text' class='ball_signature' name='ball_signature' value="2-5-9-12-27-40"/>							
 						</div>
 					</div>
-
 					<div class='form_segment' id='input_field_ball_set'>
 						<div class='container_label_balls'>
-							<input type='text' class='ball' name='ball_1' placeholder='23' onchange="orderDigits()" />
+							<input type='text' class='ball' name='ball_1' value="2" onblur="orderDigits()"/>
 							<label class='label_ball' for='ball_1'>Ball #1</label>
 						</div>
 						<div class='container_label_balls'>
-							<input type='text' class='ball' name='ball_2' placeholder='02' onchange="orderDigits()" />
+							<input type='text' class='ball' name='ball_2' value="5" onblur="orderDigits()"/>
 							<label class='label_ball' for='ball_2'>Ball #2</label>
 						</div>
 						<div class='container_label_balls'>
-							<input type='text' class='ball' name='ball_3' placeholder='17' onfocus="orderDigits()" />
+							<input type='text' class='ball' name='ball_3' value="9" onblur="orderDigits()"/>
 							<label class='label_ball' for='ball_3'>Ball #3</label>
 						</div>
 						<div class='container_label_balls'>
-							<input type='text' class='ball' name='ball_4' placeholder='20' onfocus="orderDigits()"/>
+							<input type='text' class='ball' name='ball_4' value="12" onblur="orderDigits()"/>
 							<label class='label_ball' for='ball_4'>Ball #4</label>
 						</div>
 						<div class='container_label_balls'>
-							<input type='text' class='ball' name='ball_5' placeholder='49' onfocus="orderDigits()"/>
+							<input type='text' class='ball' name='ball_5' value="27" onblur="orderDigits()"/>
 							<label class='label_ball' for='ball_5'>Ball #5</label>
 						</div>
 						<div class='container_label_balls'>
-							<input type='text' class='ball' name='ball_6' placeholder='40' onfocus="orderDigits()"/>
+							<input type='text' class='ball' name='ball_6' value="40" onblur="orderDigits()"/>
 							<label class='label_ball' for='ball_6'>Ball #6</label>
 						</div>
-					</div>			
-						
-					<!--
-						<input type='submit' class="button" value='Submit' onclick="http://localhost/LottoProject/Lotto_JS/submitRequest2Server(updateInnerElement,'combo_this',XHR,'Select', 'POST', 'http://localhost/LottoProject/Lotto_PHP.php',true,'application/x-www-form-urlencoded','UserName','Secret')"/>
-					-->
+					</div>
 					<div class='form_segment' id='summit'>
 						<!--
 							<input type='submit' class='button' value='Submit' onclick='DB_Test(); return false;'/>
 							<input type='submit' class='button' value='Submit' onclick='submitForm(); return false;'/>
-						-->						
+							<input type='submit' class="button" value='Submit' onclick="submitRequest2Server(updateInnerElement,'combo_this',XHR,'Select', 'POST', 'http://localhost/LottoProject/Lotto_PHP.php',true,'application/x-www-form-urlencoded','UserName','Secret')"/>
+						-->				
 						<input type='submit' class='button' value='Submit' onclick='submitRequest2Server(); return false;'/>			
-					</div>
-					
+					</div>					
 					<hr/>	
 				</form>
 			</div>
 			<br>
 			<div class="super_container" id="super_container">
-				<div  class="content_container" id="play_combo">					
+				<div  class="content_container" id="play_combo">
 					<p class='big_header'>Own Play</p>
 					<div class="arch_history_container">
 						<div class="history_container">
 							<p class='small_header'>Commonality this Instance</p>
 							<div class="inner_box" id="combo_this">
-								<p>How Common is your Combination this instance</p>			
+								<p>How Common is your Combination this instance</p>
 							</div>
 						</div>
-
 						<div class="history_container">
 							<p class='small_header'>Commonality intance of Interest</p>
 							<div class="inner_box" id="combo_specific" >
 								<p>How Common is your Combination specific instance</p>
 							</div>
 						</div>
-
 						<div class="history_container">
 							<p class='small_header'>Commonality all Instances</p>
 							<div class="inner_box" id="combo_history">
@@ -152,7 +136,6 @@
 					</div>
 				</div>
 				<br/>
-
 				<div  class="content_container"  id="play_each_number">
 					<p class='big_header'>Each Number</p>
 					<div class="arch_history_container">
@@ -162,14 +145,12 @@
 								<p>Instances each number is played</p>
 							</div>
 						</div>
-
 						<div class="history_container">
 							<p class='small_header'>Least Recurring</p>
 							<div class="inner_box" id="combo_Least_Recurring_Number">
 								<p>Least Recurring Number</p>
 							</div>
 						</div>
-
 						<div class="history_container">
 							<p class='small_header'>Most Recurring</p>
 							<div class="inner_box" id="combo_Most_Recurring_Number">
@@ -179,7 +160,6 @@
 					</div>
 				</div>
 				<br/>
-
 				<div class="content_container" id="play_last_played">
 					<div class='big_header'>Combinations</div>
 					<div class="arch_history_container">
@@ -189,14 +169,12 @@
 								<p>Never Played Combination</p>
 							</div>
 						</div>
-
 						<div class="history_container">
 							<p class='small_header'>Least Played</p>
 							<div class="inner_box" id="combo_Least_Played_Combination">
 								<p>Least Played Combination</p>
 							</div>
 						</div>
-
 						<div class="history_container">
 							<p class='small_header'>Most Played</p>
 							<div class="inner_box" id="combo_Most_Played_Combination">
@@ -207,14 +185,56 @@
 				</div>
 			</div>
 		</div>
-		<br>
-	</body>										
+		<br>		
+		<script>
+			function orderDigits() {
+				let ball_sign = document.getElementsByName("ball_signature")[0];
+				let ballz = document.getElementsByClassName("ball");
+
+				if(!anyElementHasFocus(ballz)){
+					let ballz_valz = [];
+					let count_ballz = 0;					
+					let for_tempHolder = "";
+
+					for(let ball of ballz){
+						ballz_valz[count_ballz] = Number(ball.value);
+						count_ballz++;
+					}
+
+					ballz_valz.sort(function(a, b){return a-b});
+
+					for(let ball_val of ballz_valz){
+						if(for_tempHolder == ""){
+							for_tempHolder = ball_val;
+						}
+						else{						
+							for_tempHolder += ("-" + ball_val);
+						}
+					}
+
+					ball_sign.value = for_tempHolder;
+					console.log(ball_sign.value);
+				}
+			}
+		</script>
+		<script>
+			function anyElementHasFocus(arrayElements) {
+				let anyFocused = false;
+				for(let arrayElement of arrayElements){
+					if(arrayElement.hasfocus){
+						anyFocused = true;
+						break;
+					}
+				}
+				return anyFocused;
+			}
+		</script>
+	</body>
 </html>
 
 <!-- Old Code
-						action='\Billyz\Billy.php'
-						vs
-						action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"
-						submitRequest2Server(updateInnerElement,'combo_this',XHR,'Select', 'POST', 'http://localhost/LottoProject/Lotto_PHP.php',true,'application/x-www-form-urlencoded','UserName','Secret')
-
-					-->
+	action='\Billyz\Billy.php'
+		vs
+	action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"
+	submitRequest2Server(updateInnerElement,'combo_this',XHR,'Select', 'POST', 'http://localhost/LottoProject/Lotto_PHP.php',true,'application/x-www-form-urlencoded','UserName','Secret')
+-->
