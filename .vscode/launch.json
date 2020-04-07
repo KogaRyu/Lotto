@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         
 /*         {            
             "name": "Launch Program",
@@ -33,7 +34,15 @@
             //"url": "http://localhost/LottoCoverage/",
             "url": "http://localhost/LottoCoverage/Lotto_HTML.html",
             "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "firefox",            
+            "request": "launch",
+            "name": "Launch Firefox against localhost",
+            "url": "http://localhost/LottoCoverage/Lotto_HTML.html",
+            "webRoot": "${workspaceFolder}"
         }
+
         /* ,        
         {
             "type": "chrome",

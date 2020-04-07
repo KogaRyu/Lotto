@@ -121,12 +121,21 @@
                 array_push($holder,array($keyAssoc=>$assocVal));                    
             }                
         }
-        else {
+        else if ($postMethod == 'GET') {
             foreach ($keyAssocs as $keyAssoc) {
                 $assocVal=cleanHtmlInput($_GET[$keyAssoc]);
                 array_push($holder,array($keyAssoc=>$assocVal));                    
             }
-        } 
+        }
+        else if($postMethod == 'REQUEST'){
+            foreach ($keyAssocs as $keyAssoc) {
+                $assocVal=cleanHtmlInput($_GET[$keyAssoc]);
+                array_push($holder,array($keyAssoc=>$assocVal));                    
+            }
+        }
+        else {
+            $echo "Put, Delete etc are not yet implemented")
+        }
         return $holder;                       
     }
 */
