@@ -17,10 +17,11 @@ function submitRequest2Server1() {
 }
 
 function submitRequest2Server(queryString2Server = 'Submit') {
-    let elementIdNameList = ['combo_this', 'combo_specific', 'combo_history',
-                             'combo_each_Number', 'combo_Least_Recurring_Number', 'combo_Most_Recurring_Number',
-                             'combo_Never_Played_Combination', 'combo_Least_Played_Combination', 'combo_Most_Played_Combination'
-                            ];    
+    let elementIdNameList = [
+        'combo_this', 'combo_specific', 'combo_history',
+        'combo_each_Number', 'combo_Least_Recurring_Number', 'combo_Most_Recurring_Number',
+        'combo_Never_Played_Combination', 'combo_Least_Played_Combination', 'combo_Most_Played_Combination'
+    ];    
     
     let sendMethod = 'POST';
     let serverFileURL = 'Lotto_PHP_Class_DB_Talk2World.php';
@@ -32,7 +33,7 @@ function submitRequest2Server(queryString2Server = 'Submit') {
     //let callbackFunction=updateInnerElement;    
     let XHR = XHR_Connection();
     try {
-        queryString2Server = checkTargetSender(any);
+        queryString2Server = checkTargetSender();
         sendXHR2Server(XHR, updateInnerElement, elementIdNameList, queryString2Server, sendMethod, serverFileURL, asyncSync, contentType, userName, passWord);
     }
     catch (err) {

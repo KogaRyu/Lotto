@@ -4,52 +4,68 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
-        
-/*         {            
-            "name": "Launch Program",
-            "type": "node",
+        {   // *** Chrome => localhost ***
+            "name": "Chrome => localhost",
+            "type": "chrome",
             "request": "launch",
-            "program": "${workspaceFolder}/app.js"
-        }, */
-        {
+            "url": "http://localhost/LottoCoverage/Lotto_HTML.html",
+            "webRoot": "${workspaceFolder}"
+            /* //   OR replace webRoot with:
+                "pathMappings": [{
+                    "url": "http://localhost",
+                    "path": "${workspaceFolder}"
+                }]
+                //  url property may point to a file or a directory,
+                // if it points to a directory it must end with a trailing /
+                // (e.g. http://localhost/my-app/).
+
+                // Setting the pathMappings manually becomes necessary if the url points to
+                // a file or resource in a subdirectory of your project,
+                // e.g. http://localhost/login/index.html
+            */
+        },
+        {   // *** Firefox => localhost" ***
+            "name": "Firefox => localhost",
+            "type": "firefox",            
+            "request": "launch",
+            "reAttach": true,
+            "url": "http://localhost/LottoCoverage/Lotto_HTML.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {   // *** Listen for XDebug ***
             "name": "Listen for XDebug",
             "type": "php",
             "request": "launch",
             "port": 9001,
         },
-        {
-            "name": "Launch currently open script",
+        {   // *** Currently open Script ***
+            "name": "Currently open Script",
             "type": "php",
             "request": "launch",
             "program": "${file}",
             "cwd": "${fileDirname}",
             "port": 9000
-        },
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Launch Chrome against localhost",
-            //"url": "http://localhost:8080",
-            //"url": "http://localhost/LottoCoverage/",
-            "url": "http://localhost/LottoCoverage/Lotto_HTML.html",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "type": "firefox",            
-            "request": "launch",
-            "name": "Launch Firefox against localhost",
-            "url": "http://localhost/LottoCoverage/Lotto_HTML.html",
-            "webRoot": "${workspaceFolder}"
-        }
+        }        
 
-        /* ,        
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Launch Chrome from the file system",
-            "file": "${workspaceFolder}"
-            //${workspaceFolder}/Paint.html
-        } */
+        /*  ,   // *** Chrome => the File System ***
+            {
+                "type": "chrome",
+                "request": "launch",
+                "name": "Chrome => the File System",
+                "file": "${workspaceFolder}"
+                //${workspaceFolder}/Paint.html
+            }
+        */     
+        
+        /*  ,   // *** Launch Program ***
+            {            
+                "name": "Launch Program",
+                "type": "node",
+                "request": "launch",
+                "program": "${workspaceFolder}/app.js"
+            }
+        */
+        
     ]
 }
+
