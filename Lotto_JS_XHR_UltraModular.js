@@ -1,85 +1,95 @@
-function submitRequest2Server1() {
-    let elementIdNameList = ['combo_this','combo_specific','combo_history',
-                            'combo_each_Number','combo_Least_Recurring_Number','combo_Most_Recurring_Number',
-                            'combo_Never_Played_Combination','combo_Least_Played_Combination','combo_Most_Played_Combination'];    
-    let queryString2Server = 'Query:Select';
-    let sendMethod = 'POST';
-    let serverFileURL = 'Lotto_PHP_Class_DB_Talk2World.php';
-    let asyncSync = true;
-    let contentType = 'application/x-www-form-urlencoded';
-    let userName = '';
-    let passWord = '';
+// ********************************************
+// ********************************************
 
-    //let callbackFunction=updateInnerElement;    
-    let XHR=XHR_Connection();    
-
-    sendXHR2Server(XHR,updateInnerElement,elementIdNameList,queryString2Server,sendMethod,serverFileURL,asyncSync,contentType,userName,passWord);
-}
-
-function submitRequest2Server(queryString2Server = 'Submit') {
-    let elementIdNameList = [
-        'combo_this', 'combo_specific', 'combo_history',
-        'combo_each_Number', 'combo_Least_Recurring_Number', 'combo_Most_Recurring_Number',
-        'combo_Never_Played_Combination', 'combo_Least_Played_Combination', 'combo_Most_Played_Combination'
-    ];    
-    
-    let sendMethod = 'POST';
-    let serverFileURL = 'Lotto_PHP_Class_DB_Talk2World.php';
-    let asyncSync = true;
-    let contentType = 'application/x-www-form-urlencoded';
-    let userName = '';
-    let passWord = '';
-
-    //let callbackFunction=updateInnerElement;    
-    let XHR = XHR_Connection();
+function submitRequest2Server(queryString2Server = '') {
+    let settingsSend2Server         = fnSettingsSend2Server();
+    let XHR                         = XHR_Connection();
     try {
-        queryString2Server = checkTargetSender();
-        sendXHR2Server(XHR, updateInnerElement, elementIdNameList, queryString2Server, sendMethod, serverFileURL, asyncSync, contentType, userName, passWord);
+        let senderFeedback          = checkTargetExpectedSender(event);
+        let senderIsExpectedSender  = senderFeedback[0];
+        let expectedSenderName      = senderFeedback[1];
+
+        if (senderIsExpectedSender) {
+            if (expectedSenderName == "lotto_ball_x") {
+                orderDigits(ball_sign,ballz);
+            } else {
+                queryString2Server  = "?"+ "Request Sender"+"="+expectedSenderName + makeServerStringData(serverString2Object);
+                //orderDigits(ball_sign,ballz);
+                sendXHR2Server(XHR, updateInnerElement, settingsSend2Server.elementIdNameList, queryString2Server, settingsSend2Server.sendMethod, settingsSend2Server.serverFileURL, settingsSend2Server.asyncSync, settingsSend2Server.contentType, settingsSend2Server.userName, settingsSend2Server.passWord);
+            }
+        } else {
+            alert("Unknown Sender: "+ expectedSenderName);
+        }
+        
     }
     catch (err) {
         alert(err);
-        sendXHR2Server(XHR, updateInnerElement, elementIdNameList, queryString2Server, sendMethod, serverFileURL, asyncSync, contentType, userName, passWord);
+        sendXHR2Server(XHR, updateInnerElement, settingsSend2Server.elementIdNameList, queryString2Server, settingsSend2Server.sendMethod, settingsSend2Server.serverFileURL, settingsSend2Server.asyncSync, settingsSend2Server.contentType, settingsSend2Server.userName, settingsSend2Server.passWord);
     }
 }
 // ********************************************
 
-function checkTargetSender(eventTarget) {
-    let senderTarget = eventTarget.target;
-    let senderTargetTagName = "";    
-    let senderTargetName = "";
-    let senderTargetId = eventTarget.target.getAttribute("id");
+function makeServerStringData(serverString2Object, dataSeperator = "&"){    
+    let serverString2Query  = "";
+    let dataSeperator       = "&"; // OR "\r\n"
+    let serverString2Keys   = Object.keys(serverString2Object);
+    
+    for (let dataElementName in serverString2Keys) {
+        serverString2Query += serverString2Query=="" ? dataElementName+"="+serverString2Object[dataElementName] : dataSeperator+dataElementName+"="+serverString2Object[dataElementName];
+    }
+    return serverString2Query;
+}
+// ********************************************
+
+function checkTargetExpectedSender(event) {
+    let senderTarget                = event.target;
+    let senderExpectedSender        = false;    
+    let senderTargetName            = "";
+    let senderTargetId              = event.target.getAttribute("id");
     
     switch (senderTargetId) {
-        case "twitter_user_name":
+        case "lotto_twitter_user_name":
             // User Name
-            senderTargetName = senderTargetId;
+            senderTargetName        = senderTargetId;
+            senderExpectedSender    = true;
             break;
-        case "draw_type":
+        case "lotto_draw_type":
             // Draw Type
-            senderTargetName = senderTargetId;
+            senderTargetName        = senderTargetId;
+            senderExpectedSender    = true;
             break;
-        case "check_WeekDay":
-            // Week Day
-            senderTargetName = senderTargetId;
+        case "lotto_draw_date":
+            // Draw Date
+            senderTargetName        = senderTargetId;
+            senderExpectedSender    = true;
             break;
-        case "check_BallSignature":
+        case "lotto_ball_signature":
             // Balls Signature
-            senderTargetName = senderTargetId;   
+            senderTargetName        = senderTargetId; 
+            senderExpectedSender    = true;  
             break;
-        default: // Main SubmitButton
-            // Main Submit Button
-            senderTargetName = "Submit";
+        case "lotto_submit":
+            // Submit
+            senderTargetName        = senderTargetId;
+            senderExpectedSender    = true;   
+            break;
+        default:            
+            let checkBalls          = senderTargetId.search(/b[lotto_ball_][/d]{1}/i);
+            if (checkBalls){                
+                senderTargetName    = "lotto_ball_x";
+                senderExpectedSender= true;
+            }
             break;
     }
-    return senderTargetName;
+    return [senderExpectedSender, senderTargetName];
 }
 // ********************************************
 
 function XHR_Connection() {
-    let XHR_Object=null;
+    let XHR_Object          = null;
     if (window.XMLHttpRequest) { // code for IE7+, Opera 8.0+, Firefox, Chrome, Safari.
         try {
-            XHR_Object=new XMLHttpRequest();        
+            XHR_Object      = new XMLHttpRequest();        
         }
         catch (e)  {
             alert("Could not create New Connection Object")
@@ -87,14 +97,14 @@ function XHR_Connection() {
     }
     else if (window.ActiveXObject){ // Internet Explorer Browsers
         try {   // Msxml2.XHR: code for IE6, IE
-            XHR_Object=new ActiveXObject('Msxml2.XHR');
+            XHR_Object      = new ActiveXObject('Msxml2.XHR');
         }
         catch (e)  {   // Even Older IE
             try {   // Microsoft.XHR: code for IE6, IE5
-                XHR_Object=new ActiveXObject('Microsoft.XHR');
+                XHR_Object  = new ActiveXObject('Microsoft.XHR');
             }
             catch (e) {    // Browser atttempts failed
-                XHR_Object=false;
+                XHR_Object  = false;
                 alert("Could not create Both of Old Connection Objects")
             }
         }    
@@ -108,60 +118,25 @@ function XHR_Connection() {
 
 function sendXHR2Server(XHR,callbackFunction,elementIdName,queryString2Server,sendMethod,serverFileURL,asyncSync,contentType,userName,passWord) {
     if (sendMethod=='POST') {
-        XHR.onreadystatechange=function(){
-            if (XHR.readyState == 4) { // Received Ok
-                if(XHR.status == 200) { // Status 200
-                    // The below could be any other function
-                    alert("Connected" + "<br>"+ " - Ready State: " + XHR.readyState +  "<br>"+ " - Status: " + XHR.status+  "<br>"+ " - Status Text: " + XHR.statusText); 
-                    callbackFunction(XHR,elementIdName);
-                    
-                }
-                else{   // Status other
-                    // The below could be any other function
-                    alert("Not Connect" + "<br>"+ " - Ready State: " + XHR.readyState +  "<br>"+ " - Status: " + XHR.status+  "<br>"+ " - Status Text: " + XHR.statusText);                  
-                    callbackFunction(XHR,elementIdName);
-                }
-            }   
+        XHR.onreadystatechange  = function(){
+            processStatusChange(callbackFunction,XHR,elementIdName);  
         };
         XHR.open(sendMethod,serverFileURL,asyncSync);
         XHR.setRequestHeader("Content-type",contentType);
-        XHR.send(queryString2Server)
+        XHR.send(queryString2Server);
     }
     else if (sendMethod=='REQUEST') {
-        XHR.onreadystatechange=function(){
-            if (XHR.readyState == 4) { // Received Ok
-                if(XHR.status == 200) { // Status 200
-                    // The below could be any other function
-                    alert("Connected" + "<br>"+ " - Ready State: " + XHR.readyState +  "<br>"+ " - Status: " + XHR.status+  "<br>"+ " - Status Text: " + XHR.statusText); 
-                    callbackFunction(XHR,elementIdName);
-                    
-                }
-                else{   // Status other
-                    // The below could be any other function
-                    alert("Not Connect" + "<br>"+ " - Ready State: " + XHR.readyState +  "<br>"+ " - Status: " + XHR.status+  "<br>"+ " - Status Text: " + XHR.statusText);                  
-                    callbackFunction(XHR,elementIdName);
-                }
-            }   
+        XHR.onreadystatechange  = function(){
+            processStatusChange(callbackFunction,XHR,elementIdName);  
         };
         XHR.open(sendMethod,serverFileURL,asyncSync);
         XHR.setRequestHeader("Content-type",contentType);
-        XHR.send(queryString2Server)
+        XHR.send(queryString2Server);
     }
     else if (sendMethod=='GET') {
-        XHR.onreadystatechange=function(){
-            if (XHR.readyState == 4) { // Received Ok
-                if(XHR.status == 200) { // Status 200
-                    // The below could be any other function
-                    alert("Connected" + "<br>"+ " - Ready State: " + XHR.readyState +  "<br>"+ " - Status: " + XHR.status+  "<br>"+ " - Status Text: " + XHR.statusText); 
-                    callbackFunction(XHR,elementIdName);
-                }
-                else{   // Status other
-                    // The below could be any other function
-                    alert("Not Connect" + "<br>"+ " - Ready State: " + XHR.readyState +  "<br>"+ " - Status: " + XHR.status+  "<br>"+ " - Status Text: " + XHR.statusText);                  
-                    callbackFunction(XHR,elementIdName);
-                }
-            }   
-        }
+        XHR.onreadystatechange  = function(){
+            processStatusChange(callbackFunction,XHR,elementIdName);  
+        };
         XHR.open(sendMethod,serverFileURL+queryString2Server,asyncSync);
         XHR.send();
     }
@@ -169,26 +144,9 @@ function sendXHR2Server(XHR,callbackFunction,elementIdName,queryString2Server,se
         alert("Unknown method of sending");      
     }
 }
+// ********************************************
 
-function sendXHR2Server2(XHR,callbackFunction,elementIdName,queryString2Server,sendMethod,serverFileURL,asyncSync,contentType,userName,passWord) { 
-    if (sendMethod=='GET') {
-        XHR.onreadystatechange=processStatusChange(callbackFunction,XHR,elementIdName);  //  Update the Inner Element
-        XHR.open(sendMethod,serverFileURL+queryString2Server,asyncSync);
-        XHR.send();
-    }
-    else if (sendMethod=='POST') {
-        XHR.onreadystatechange=processStatusChange(callbackFunction,XHR,elementIdName);  //  Update the Inner Element
-        XHR.open(sendMethod,serverFileURL,asyncSync);
-        XHR.setRequestHeader("Content-type",contentType);
-        XHR.send(queryString2Server)
-    }
-    else {  //   "Unknown or Undefined method of sending"
-        alert("Unknown method of sending");      
-    }
-}
-// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-function processStatusChange(callbackFunction,XHR,elementIdName) {
+function processStatusChange(callbackFunction,XHR,elementIdName) {    
     if (XHR.readyState == 4) { // Received Ok
         if(XHR.status == 200) { // Status 200
             // The below could be any other function
@@ -201,31 +159,22 @@ function processStatusChange(callbackFunction,XHR,elementIdName) {
             alert("Not Connect" + "<br>"+ " - Ready State: " + XHR.readyState +  "<br>"+ " - Status: " + XHR.status+  "<br>"+ " - Status Text: " + XHR.statusText);                  
             callbackFunction(XHR,elementIdName);
         }
-    }      
+    }        
 }
 // ********************************************
 
 function updateInnerElement(XHR,elementIdNameList){
-    let displayElementList = [];
-    elementIdNameList.forEach(
-        function(elementIdName){        
-            let displayElement = document.getElementById(elementIdName);
-            displayElement.innerHTML = getDisplayText(XHR);
-            displayElementList.push(displayElement);
-        }
-    );
-}
-
-function updateInnerElement2(XHR,elementIdNameList){
-    counter = 0;
-    let displayElementList = [];
-    elementIdNameList.forEach(
-        function(elementIdName){
-            displayElementList[counter] = document.getElementById(elementIdName);    
-            displayElementList[counter].innerHTML = getDisplayText(XHR); 
-            counter++;
-        }
-    );
+    let displayElementList                          = {};
+    for(elementIdName of elementIdNameList){    
+        let displayElement                          = document.getElementById(elementIdName);
+        displayElementList[elementIdName]           = displayElement;
+        
+        // Extract the relevant Data and put in displayElement.innerHTML
+        // displayElement[AppicableElement].innerHTML = relevantResponseText["AppicableElement"]
+        let relevantResponseText                    = getDisplayText(XHR);
+        displayElementList[elementIdName].innerHTML = relevantResponseText; // relevantResponseText["elementIdName"]
+        
+    }
 }
 // ********************************************
 
@@ -239,4 +188,5 @@ function getDisplayText(XHR){
                         "</p>";
     return textHolder;
 }
+// ********************************************
 // ********************************************
