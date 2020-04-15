@@ -13,7 +13,7 @@ function submitRequest2Server(queryString2Server = '') {
             if (expectedSenderName == "lotto_ball_x") {
                 orderDigits(ball_sign,ballz);
             } else {
-                queryString2Server  = "?"+ "Request Sender"+"="+expectedSenderName + makeServerStringData(serverString2Object);
+                queryString2Server  = "Request Sender"+"="+expectedSenderName +"&"+ makeServerStringData(serverString2Object);
                 //orderDigits(ball_sign,ballz);
                 sendXHR2Server(XHR, updateInnerElement, settingsSend2Server.elementIdNameList, queryString2Server, settingsSend2Server.sendMethod, settingsSend2Server.serverFileURL, settingsSend2Server.asyncSync, settingsSend2Server.contentType, settingsSend2Server.userName, settingsSend2Server.passWord);
             }
@@ -29,13 +29,12 @@ function submitRequest2Server(queryString2Server = '') {
 }
 // ********************************************
 
-function makeServerStringData(serverString2Object, dataSeperator = "&"){    
+function makeServerStringData(serverString2Object, dataSeperator = "&"){    // dataSeperator = "&" OR "\r\n"
     let serverString2Query  = "";
-    let dataSeperator       = "&"; // OR "\r\n"
     let serverString2Keys   = Object.keys(serverString2Object);
     
-    for (let dataElementName in serverString2Keys) {
-        serverString2Query += serverString2Query=="" ? dataElementName+"="+serverString2Object[dataElementName] : dataSeperator+dataElementName+"="+serverString2Object[dataElementName];
+    for (let dataElementName of serverString2Keys) {
+        serverString2Query += serverString2Query=="" ? serverString2Object[dataElementName].id+"="+serverString2Object[dataElementName].value : dataSeperator+serverString2Object[dataElementName].id+"="+serverString2Object[dataElementName].value;
     }
     return serverString2Query;
 }
