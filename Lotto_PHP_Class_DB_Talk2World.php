@@ -1,129 +1,98 @@
 <?php
     // include_once('Lotto_PHP_DB_Config.php');
+    //include_once('Lotto_PHP_DB_Queries');
     include_once("Lotto_PHP_Class_DB_Active.php");
     include_once("Lotto_PHP_Class_DB_ShortCut.php");    
     include_once("Lotto_PHP_Class_DB_Output.php");
   
     function pOutputShort() {
-        echo "<br> Hello PHP Ext PDO Creation.<br> /r";
         $extPDO = New EXT_PDO();
-        echo "Hello PHP Ext PDO Query.<br> /r";
-        $results = $extPDO->run('Select * From tbl_lottery_Draws')->fetchAll();
-        echo "Hello PHP Ext PDO Output.<br> /r";
+        //echo "<br> Hello PHP Ext PDO Creation.<br> \r";
+        $requestDetails = $_POST;
+        // Check Sender then act based on Sender.
+        if($requestDetails){
+            switch ($requestDetails["Request_Sender"]) {
+                case 'lotto_twitter_user_name':                                      
+                    $query2run = 'sql_Input_TwitterUser';
+                    takeActionHelper($query2run,$requestDetails);
+                    break;                
+                case 'lotto_draw_date':                                      
+                    $query2run = 'sql_Input_DrawDate';
+                    takeActionHelper($query2run,$requestDetails);
+                    break;
+                case 'lotto_draw_type':                                      
+                    $query2run = 'sql_Input_DrawType';
+                    takeActionHelper($query2run,$requestDetails);
+                    break;               
+                case 'lotto_balls_signature':                                      
+                    $query2run = 'sql_Input_BallSignature';
+                    takeActionHelper($query2run,$requestDetails);
+                    break;                
+                case 'lotto_submit':                                      
+                    $query2run = 'sql_Input_SubmitAll';
+                    takeActionHelper($query2run,$requestDetails);
+                    break;
+                default:
+                    # Unknown Request
+                    break;
+            }
+        }
+    }
+
+    function takeActionHelper($sql_QueryName,$requestDetails,$dbQueriesFileName = 'Lotto_PHP_DB_Queries.php'){
+        $userTimeStamp          = time();
+        $userIP                 = getUserIpAddress();
+        $requestDetails['lotto_reg_date']= $userTimeStamp;
+        $requestDetails['lotto_ip_address']= $userIP;
+        
+        $dbQueriesFileObj       = include($dbQueriesFileName);
+        $sql_Query2run          = $dbQueriesFileObj[$sql_QueryName];
+        $sqlStatement_check2run = $sql_Query2run['query_select']['query'];
+        $sqlParams_check2run    = $sql_Query2run['query_select']['params'];
+        
+        $stmtParams2Send=[];
+
+        foreach ($sqlParams_check2run as $key => $key_value) {
+            $stmtParams2Send[$key_value]= $requestDetails[$key_value];
+        }
+
+        //echo "Hello PHP PDO.<br> \r";
+        $extPDO = New EXT_PDO();
+        //echo "PHP Extended-PDO Created.<br> \r";
+        $results = $extPDO->run($sqlStatement_check2run, $stmtParams2Send)->fetchAll();
+        //echo "Query Run Query & Fetch All Results.<br> \r";        
+        $output = New DB_Output($results);
+        //echo "Results converted to Output.<br> \r";
+        echo $output->getOutput().".<br> \r";
+        //echo "Output Displayed.<br> \r";
+        //echo "Bye PHP Ext PDO.<br> \r";
+    }
+
+    function getUserIpAddress(){
+        if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+            //ip from share internet
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+            //ip pass from proxy
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }else{
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
+    }
+    
+
+    function takeActionHelper2($sqlStatement2run,$stmtParams2Send = NULL){                            
+        $extPDO = New EXT_PDO();
+        echo "Hello PHP Ext PDO Query.<br> \r";
+        $results = $extPDO->run($sqlStatement2run, $stmtParams2Send)->fetchAll();
+        echo "Hello PHP Ext PDO Output.<br> \r";
         $output = New DB_Output($results);
         #$queryOutputout = $results->fetchAll();
-        echo $output->getOutput().".<br> /r";
+        echo $output->getOutput().".<br> \r";
         #$output = $extPDO->fetch();      
         #$myActive=New DB_Active();
-        echo "Bye PHP Ext PDO.<br> /r";
+        echo "Bye PHP Ext PDO.<br> \r";
     }
-
     pOutputShort();
-
-/*  // Helper Functions
-    function withinRange($inputVal, $minVal=1,$maxVal=49) {
-        if($inputVal>=$minVal && $inputVal<=$maxVal) {
-            return inputVal;
-        }
-        else {
-            $value=NULL;
-            exit();
-        }
-    }
-
-    function cleanHtmlInput($value) {
-        if( isset($value) ) {
-            $value=trim($value);
-            if( $value!="" && $value!="none" ) {
-                $value=stripslashes($value);
-                $value=htmlspecialchars($value);
-            }
-            else {
-                exit();
-            }
-        }
-        else {
-            $value=NULL;
-            exit();
-            }          
-        return $value;
-    }
-
-    function validateInput($drawDate,$drawType,$userName,$myNumbers) {
-
-        $inputSettings = array('drawDate'=>$drawDate,'drawType'=>$drawType,'userName'=>$userName);
-        $drawDate=makeAssocInput('drawDate');            
-        $drawType= makeAssocInput('drawType');
-        $userName= makeAssocInput('userName');
-
-        $myNumbersKeys= array('ball_1','ball_2','ball_3','ball_4','ball_5','ball_6');
-        $myNumbers=makeAssocInput($myNumbersKeys);
-
-        foreach ($myNumbersKeys as $key => $value) {
-            $myNumbers=cleanHtmlInput($myNumbersKeys);
-        }
-
-        $listInputs=Array('settingsInput'=>$inputSettings,'myNumbersInputs'=>$myNumbers);
-    }
-
-    function DB_Update(){
-        $BD_Con = DB_Connect('dblotto');
-        $mytableName="tblnumbersplanned";
-        $myNumbers = [];
-        if(isset($_POST['ball_1']) && isset($_POST['ball_2']) && isset($_POST['ball_3']) && isset($_POST['ball_4']) && isset($_POST['ball_5']) && isset($_POST['ball_6'])) {
-            if($_POST['ball_1'] != "none" && $_POST['ball_2'] != "none" && $_POST['ball_3'] != "none" && $_POST['ball_4'] != "none" && $_POST['ball_5'] != "none"&& $_POST['ball_6'] != "none") {
-                $myNumbers[1] = $_POST['ball_1'];
-                $myNumbers[2] = $_POST['ball_2'];
-                $myNumbers[3] = $_POST['ball_3'];
-                $myNumbers[4] = $_POST['ball_4'];
-                $myNumbers[5] = $_POST['ball_5'];
-                $myNumbers[6] = $_POST['ball_6'];
-            }
-            if ($_POST['doctorsFilter'] == "all") {
-                $mySql = 'INSERT INTO books VALUES (null,"Jack Herrington","Code Generation in Action");';
-                $myResult = myDisplayAll($BD_Con,$mySql);
-            }
-            elseif ($_POST['doctorsFilter'] == "charge"){
-                $myfee = $_POST['fee'];
-                if(!empty($myfee)) {
-                    $sqlInsertBall = "INSERT INTO $mytableName (`ID`,`Draw_Date`, `Draw_Type`, `Balls_Planned`, `ID_User`) VALUES (Null, $_POST['drawDate'], $_POST['drawType'], $myNumbers[$i], $_POST['userName']) WHERE fee < :fee;";                    
-                    $myResult = $DB_Connection->prepare($sqlInsertBall);
-                    $myResult->bindParam(':fee',$myfee);
-                    $myResult->execute();
-                    $myResult = myDisplaySome($BD_Con,$sqlInsertBall,$myfee);
-                }
-                else{
-                    echo "<h1> Choose to Return All or Below the fee!</h1>";
-                }
-            }
-        }
-    }
-
-    function makeAssocInput($keyAssocs, $postMethod='POST') {            
-        $holder=array();
-        if ($postMethod == 'POST') {
-            foreach ($keyAssocs as $keyAssoc) {
-                $assocVal=cleanHtmlInput($_POST[$keyAssoc]);
-                array_push($holder,array($keyAssoc=>$assocVal));                    
-            }                
-        }
-        else if ($postMethod == 'GET') {
-            foreach ($keyAssocs as $keyAssoc) {
-                $assocVal=cleanHtmlInput($_GET[$keyAssoc]);
-                array_push($holder,array($keyAssoc=>$assocVal));                    
-            }
-        }
-        else if($postMethod == 'REQUEST'){
-            foreach ($keyAssocs as $keyAssoc) {
-                $assocVal=cleanHtmlInput($_GET[$keyAssoc]);
-                array_push($holder,array($keyAssoc=>$assocVal));                    
-            }
-        }
-        else {
-            $echo "Put, Delete etc are not yet implemented")
-        }
-        return $holder;                       
-    }
-*/
-
 ?>

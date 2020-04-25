@@ -62,7 +62,7 @@ function checkTargetExpectedSender(event) {
             senderTargetName        = senderTargetId;
             senderExpectedSender    = true;
             break;
-        case "lotto_ball_signature":
+        case "lotto_balls_signature":
             // Balls Signature
             senderTargetName        = senderTargetId; 
             senderExpectedSender    = true;  
@@ -183,7 +183,8 @@ function getDisplayText(XHR){
                         "- Status: "+XHR.status+"<br>"+
                         "- Status Text: "+XHR.statusText+"<br>"+
                         "<br>"+
-                        "Response Text: "+XHR.responseText+"<br>"+
+                        "Response Text: "+"<br>"+
+                        "- " + XHR.responseText+"<br>"+
                         "</p>";
     return textHolder;
 }

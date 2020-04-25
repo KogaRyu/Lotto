@@ -32,11 +32,11 @@
             "url": "http://localhost/LottoCoverage/Lotto_HTML.html",
             "webRoot": "${workspaceFolder}"
         },
-        {   // *** Listen for XDebug ***
-            "name": "Listen for XDebug",
+        {   // *** PHP => xDebug ***
+            "name": "PHP => xDebug",
             "type": "php",
             "request": "launch",
-            "port": 9001,
+            "port": 9000
         },
         {   // *** Currently open Script ***
             "name": "Currently open Script",
@@ -45,7 +45,7 @@
             "program": "${file}",
             "cwd": "${fileDirname}",
             "port": 9000
-        }        
+        }       
 
         /*  ,   // *** Chrome => the File System ***
             {
@@ -66,6 +66,13 @@
             }
         */
         
+    ],
+    "compounds": [
+      {   // *** Lotto => Server/Client ***
+        "name": "Lotto => Server/Client",
+        "configurations": ["PHP => xDebug", "Chrome => localhost"]//,
+        //"preLaunchTask": "${defaultBuildTask}"
+      }
     ]
 }
 

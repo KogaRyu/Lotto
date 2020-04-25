@@ -42,3 +42,7 @@ CREATE TABLE db_lottery.tbl_lottery_coverage
     Instances_Played int,
     CONSTRAINT primaty_key_coverage PRIMARY KEY (balls_signature,draw_date,draw_type)
 );
+
+RENAME TABLE old_table1 TO new_table1,
+             old_table2 TO new_table2,
+             old_table3 TO new_table3;

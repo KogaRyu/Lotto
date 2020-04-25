@@ -8,26 +8,27 @@
             parent::__construct($this->getDsn($dsnDetails), $this->getUser($dsnDetails), $this->getPwd($dsnDetails), $this->getOptions($dsnDetails));
         }
         protected function getDsn($cfg){
-            $dbDsn = $cfg['Driver'].":host=".$cfg['Host'].";dbname=".$cfg['DB'].";charset=".$cfg['charset'];
+            $dbDsn = $cfg['Driver'].":host=".$cfg['Host'].";dbname=".$cfg['DB'].";charset=".$cfg['charset'];                            
             return $dbDsn;
-        }
-        protected function getOptions($dsnDetails){            
-            return $dsnDetails['Options'];
         }
         protected function getUser($dsnDetails){            
             return $dsnDetails['User'];
         }
         protected function getPwd($dsnDetails){
             return $dsnDetails['Password'];
+        }        
+        protected function getOptions($dsnDetails){            
+            return $dsnDetails['Options'];
         }
         public function run($sqlStatement, $stmtParams = NULL){
-            if (!$stmtParams){
+            if (!$stmtParams){ // Query has no Parameters
                 return $this->query($sqlStatement);
             }
-            $stmt = $this->prepare($sqlStatement);
-            $stmt->execute($stmtParams);
-            return $stmt;
+            else { // Query has Parameters       
+                $stmt = $this->prepare($sqlStatement);
+                $stmt->execute($stmtParams);
+                return $stmt;
+            }
         }
     }
-    
 ?>

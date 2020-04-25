@@ -49,7 +49,12 @@
 							<label class='label_ball' for = 'twitter_user'>Your Twitter User Name: </label>
 							<br/>
 							<input type='text' class='twitter_user' name='twitter_user' id='lotto_twitter_user_name' value = '@twitter_user_name'/>					
-						</div>
+						</div>						
+						<div class='form_field_draw_details' id='field_draw_date'>
+							<label class='label_ball' for='draw_date'>Draw Date: </label>
+							<br/>
+							<input type='date' class='draw_inputs draw_date' name='draw_date' id='lotto_draw_date' placeholder='yyyy/mm/dd/mm'/>					
+						</div>						
 						<div class='form_field_draw_details' id='field_draw_type'>
 							<label class='label_ball' for='draw_type'>Draw Type: </label>
 							<br/>
@@ -58,19 +63,14 @@
 								<option value="2 - National Lottery">National Lottery</option>
 								<option value="3 - Daily Lottery">Daily Lottery</option>
 							</select>				
-						</div>						
-						<div class='form_field_draw_details' id='field_draw_date'>
-							<label class='label_ball' for='draw_date'>Draw Date: </label>
-							<br/>
-							<input type='date' class='draw_inputs draw_date' name='draw_date' id='lotto_draw_date' placeholder='yyyy/mm/dd/mm'/>					
-						</div>											
-						<div class='form_field_draw_details' id='label_Balls_Signature'>
+						</div>										
+						<div class='form_field_draw_details' id='field_Balls_Signature'>
 							<!-- *** Change to this at production ***
 								<input type='hidden' class='ball_signature' name='ball_signature'  id='twitter_ball_signature' value="2-5-9-12-27-40" placeholder='00-00-00-00-00-00'/>
 							-->
-							<label class='label_ball' for='ball_signature'>Ball Signature</label>
+							<label class='label_ball' for='balls_signature'>Ball Signature</label>
 							<br/>
-							<input type='text' class='ball_signature' name='ball_signature' id='lotto_ball_signature' value="2-5-9-12-27-40" />							
+							<input type='text' class='balls_signature' name='balls_signature' id='lotto_balls_signature' value="2-5-9-12-27-40" />							
 						</div>
 					</div>
 					<div class='form_segment' id='input_field_ball_set'>

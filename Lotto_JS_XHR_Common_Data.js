@@ -4,7 +4,7 @@ function fnEventingElements(){
 			'lotto_TwitterUserName'		: document.getElementById('lotto_twitter_user_name'),
 			'lotto_DrawType'			: document.getElementById('lotto_draw_type'),
 			'lotto_DrawDate'			: document.getElementById('lotto_draw_date'),
-			'lotto_BallSignature'		: document.getElementById('lotto_ball_signature')
+			'lotto_BallSignature'		: document.getElementById('lotto_balls_signature')
 		},
 		'playBalls'		: {
 			'lotto_b1'					: document.getElementById('lotto_ball_1'),

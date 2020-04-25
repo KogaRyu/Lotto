@@ -36,17 +36,4 @@
             return $this->dataSection;
         }
     }
-
-    function DDD(){
-        $configFileName='Lotto_PHP_DB_Queries.php';
-        $mainSectionName='SQL_Select_1';
-        $dataSectionName='query_params';
-        
-        $SSS = New Read_ConfigFile($configFileName,$mainSectionName,$dataSectionName);
-        $xxx =$SSS->getDataSection();
-        echo $xxx[":twitter_user"];
-
-    }
-
-    DDD();
 ?>
