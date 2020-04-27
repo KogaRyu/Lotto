@@ -10,14 +10,7 @@
         }
 
         private function setQueryResults($dbSqlStatement,$dbFetchType) { # https://phpdelusions.net/pdo/fetch_modes  
-            # FETCH_BOTH: The row is returned in the form of array, where data is duplicated, to be accessed via both numeric and associative indexes
-            /*  array (
-                'id' => '104', 0 => '104',
-                'name' => 'John', 1 => 'John',
-                'sex' => 'male', 2 => 'male',
-                'car' => 'Toyota', 3 => 'Toyota')
-            */
-
+        
             switch ($dbFetchType) {
                 case 'FETCH_BOTH':
                     $this->dbQueryResults=$dbSqlStatement->setFetchMode(PDO::FETCH_BOTH);
