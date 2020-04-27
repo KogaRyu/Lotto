@@ -11,7 +11,7 @@ return
             ],
             'query_insert'  => [
                 'query' => 'INSERT INTO tbl_Lottery_Users (twitter_user, reg_date, ip_address) 
-                            VALUES (:lotto_twitter_user_name, :lotto_reg_date,lotto_ip_address)',
+                            VALUES (:lotto_twitter_user_name, :lotto_reg_date,:lotto_ip_address)',
                 'params'=> ['lotto_twitter_user_name', 'lotto_reg_date', 'lotto_ip_address']
             ],
             'query_update'  => [

@@ -17,21 +17,26 @@
     }
 
     function cleanHtmlInput($value) {
-        if( isset($value) ) {
-            $value=trim($value);
-            if( $value!="" && $value!="none" ) {
-                $value=stripslashes($value);
-                $value=htmlspecialchars($value);
-            }
-            else {
-                exit();
-            }
+        if(isset($value) && !empty($value) && $value!='' && strtolower($value)!='none') {
+            $value  = filter_var($value, FILTER_SANITIZE_STRING); 
+            $value  = trim($value);       
+            $value  = htmlspecialchars($value);
+            $value  = htmlentities($value);            
+            $value  = stripslashes($value);
+            $value  = strip_tags($value);
         }
         else {
-            $value=NULL;
-            exit();
-        }          
+            $value  = NULL;
+        }
         return $value;
+    }
+    function cleanHtmlInputArray($assocArray2Clean) {
+        $cleanAssocArray = [];
+        
+        foreach($assocArray2Clean as $arraKeys => $arrayValues) {
+            $cleanAssocArray[$arraKeys] = cleanHtmlInput($arrayValues);
+        }        
+        return $cleanAssocArray;
     }
 
     function validateInput($drawDate,$drawType,$userName,$myNumbers) {
@@ -60,13 +65,13 @@
         $holder=array();
         if ($postMethod == 'POST') {
             foreach ($keyAssocs as $keyAssoc) {
-                $assocVal=cleanHtmlInput($_POST[$keyAssoc]);
+                $assocVal = cleanHtmlInput($_POST[$keyAssoc]);
                 array_push($holder,array($keyAssoc=>$assocVal));                    
             }                
         }
         else if ($postMethod == 'GET') {
             foreach ($keyAssocs as $keyAssoc) {
-                $assocVal=cleanHtmlInput($_GET[$keyAssoc]);
+                $assocVal = cleanHtmlInput($_GET[$keyAssoc]);
                 array_push($holder,array($keyAssoc=>$assocVal));                    
             }
         }

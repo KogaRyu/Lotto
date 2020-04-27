@@ -23,7 +23,7 @@ function fnEventingElements(){
 
 function fnEventingEvents(){
 	let eventingEvents	= {
-		'playDetails'	: ['click', 'change'],
+		'playDetails'	: ['change'],
 		'playBalls'		: ['change'],
 		'submitButton'	: ['click']
 	};
@@ -46,13 +46,3 @@ function fnSettingsSend2Server(){
 	};
 	return settingsSend2Server;
 }
-
-/* 
-	function fnServerString2Object(){
-		let serverString2Object	= {
-			'sender': "",
-
-		};
-		return serverString2Object;
-	}
-*/
