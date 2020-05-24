@@ -25,7 +25,7 @@ class DB_Active {
         $queriesConfigFileName='Lotto_PHP_DB_Queries.php';
         $dbFetchType='FETCH_ASSOC';
         $inputSettingsObj = include($queriesConfigFileName);
-  
+
         $this->setConnection($dbConfigFile,$dbName='db_lottery');
         $query2run='';
         if($formInput){
@@ -41,56 +41,57 @@ class DB_Active {
                     break;               
                 case 'lotto_balls_signature':                                      
                     $query2run              = 'sql_Input_BallSignature';
+                    break;
+                case 'lotto_submit_entry':                                      
+                    $query2run              = 'sql_Input_BallSignature'; // *** Wanna Check this? ***
                     break;                
                 case 'lotto_submit':                                      
                     $query2run              = 'sql_Input_SubmitAll';
                     break;
                 default:
                     # Unknown Request
-                    break;
+                    exit();
             }
         }
-        $this->setStatement($query2run,$formInput,$queriesConfigFileName);            
-        $this->setFetchResults($this->dbStatement, $dbFetchType);
+        
+        $sqlQueryType2run                      = 'query_select';
+        $this->query2action($formInput,$query2run,$sqlQueryType2run,$queriesConfigFileName,$dbFetchType);
+        $itemsReturned = count($this->dbFetchResults);
+        if ($itemsReturned <= 0) {
+            $sqlQueryType2run                  = 'query_insert';
+            $this->query2action($formInput,$query2run,$sqlQueryType2run,$queriesConfigFileName,$dbFetchType);
+        }
+        else {
+            $sqlQueryType2run                  = 'query_update';
+            // Not updatable: Twitter User,
+            $this->query2action($formInput,$query2run,$sqlQueryType2run,$queriesConfigFileName,$dbFetchType);
+        }
         $this->setOutput($this->dbFetchResults,$inputDbFormat='table');
     }
+    
+    private function query2action($formInput,$query2run,$sqlQueryType2run,$queriesConfigFileName,$dbFetchType) {
+        $this->setStatement($formInput,$query2run,$sqlQueryType2run,$queriesConfigFileName);
+        $this->setFetchResults($this->dbStatement, $dbFetchType);
+    }
 
-    function setConnection($inputDbConfigFile='Lotto_PHP_DB_Config.php',$inputDbName='db_lottery'){
+    private function setConnection($inputDbConfigFile='Lotto_PHP_DB_Config.php',$inputDbName='db_lottery'){
         $holderConnection=New DB_Connection($inputDbConfigFile,$inputDbName);
         $this->dbConnection=$holderConnection->getConnection();
     }
 
-    private function setStatement($sql_QueryName,$formInput,$dbQueryFileName = 'Lotto_PHP_DB_Queries.php'){
+    private function setStatement($formInput,$sql_QueryName,$sqlQueryType2run='query_select',$dbQueryFileName = 'Lotto_PHP_DB_Queries.php'){
         $dbQueryFileObj                           = include($dbQueryFileName);
-        $sql_Query2run                              = $dbQueryFileObj[$sql_QueryName];
-        $sql_QueryType2run                          = 'query_select';
-        $check2run_sql_statement                    = $sql_Query2run[$sql_QueryType2run]['query'];
-        $check2run_sql_params                       = $sql_Query2run[$sql_QueryType2run]['params'];       
+        $sqlQuery2run                             = $dbQueryFileObj[$sql_QueryName];
         $formInput['lotto_reg_date']              = date("Y-m-d H:i:s");
-        $formInput['lotto_ip_address']            = getUserIpAddress();       
-        $stmtParams2Send                            = [];
+        $formInput['lotto_ip_address']            = getUserIpAddress();
+        $formInput['lotto_submit_entry']          = 1;
+        
+        $statement2Check=New DB_Statement($this->dbConnection,$formInput, $sqlQuery2run, $sqlQueryType2run);
+        $this->dbStatement=$statement2Check->getStatement();        
+    }    
 
-        foreach ($check2run_sql_params as $arrayValue) {
-            $stmtParams2Send[$arrayValue]           = $formInput[$arrayValue];
-        }        
-        $statement2Check=New DB_Statement($this->dbConnection,$check2run_sql_statement,$stmtParams2Send);
-        $this->dbStatement=$statement2Check->getStatement();
-                    
-        if (Count($this->dbStatement)<=0) {
-            $sql_QueryType2run                  = 'query_insert';
-            $insert2run_sql_statement            = $sql_Query2run[$sql_QueryType2run]['query'];
-            $insert2run_sql_params               = $sql_Query2run[$sql_QueryType2run]['params'];
-
-            foreach ($check2run_sql_params as $arrayValue) {
-                $stmtParams2Send[$arrayValue]   = $formInput[$arrayValue];
-            }
-            $statement2Insert=New DB_Statement($this->dbConnection,$insert2run_sql_statement,$insert2run_sql_params);
-            $this->dbStatement=$statement2Insert->getStatement();
-        }
-    }
-
-    private function setFetchResults($inputStatement){
-        $holderFetchResults=New DB_FetchResults($inputStatement);
+    private function setFetchResults($inputStatement, $dbFetchType){
+        $holderFetchResults=New DB_FetchResults($inputStatement, $dbFetchType);
         $this->dbFetchResults=$holderFetchResults->getQueryResults();
     }
 
@@ -114,6 +115,5 @@ class DB_Active {
     public function getOutput(){
         return $this->dbOutput;
     }
-    
 }
 ?>

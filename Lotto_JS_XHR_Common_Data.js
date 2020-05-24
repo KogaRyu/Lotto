@@ -14,7 +14,8 @@ function fnEventingElements(){
 			'lotto_b5'					: document.getElementById('lotto_ball_5'),
 			'lotto_b6'					: document.getElementById('lotto_ball_6')
 		},
-		'submitButton'	: {
+		'submitButtons'	: {
+			'lotto_SubmitEntry'				: document.getElementById('lotto_submit_entry'),
 			'lotto_Submit'				: document.getElementById('lotto_submit')
 		}			
 	};
@@ -25,7 +26,7 @@ function fnEventingEvents(){
 	let eventingEvents	= {
 		'playDetails'	: ['change'],
 		'playBalls'		: ['change'],
-		'submitButton'	: ['click']
+		'submitButtons'	: ['click']
 	};
 	return eventingEvents;
 }

@@ -38,7 +38,7 @@
         
         protected function Results2Table($dbQueryResult) { # Make FieldNames & Values Dynamic  
             $resultsString="";          
-            if (Count($dbQueryResult) > 0) {
+            if (Count($dbQueryResult) > 1) {
                 //$resultsStructure=$dbQueryResult->fetchAll();
                 $resultsStructure=$dbQueryResult;#->fetchAll();
                 $resultsString="<table>";
@@ -61,7 +61,7 @@
                 $resultsString.="</table>";
             }
             else {
-                $resultsString.="0 results";
+                $resultsString.="0 results <br>";
             }
             return $resultsString;
         }

@@ -67,6 +67,10 @@ function checkTargetExpectedSender(event) {
             senderTargetName        = senderTargetId; 
             senderExpectedSender    = true;  
             break;
+        case "lotto_submit_entry":
+            // Submit
+            senderTargetName        = senderTargetId; 
+            senderExpectedSender    = true;  
         case "lotto_submit":
             // Submit
             senderTargetName        = senderTargetId;

@@ -42,7 +42,7 @@
         echo "Hello PHP Class Creation.<br>";
         $myDB_Class= New DB_Active();
         echo "Hello PHP Class Output.<br>";
-        echo $myDB_Class->getOutput;
+        echo $myDB_Class->getOutput();
         echo "Bye PHP Class E.\n";
     }
 
