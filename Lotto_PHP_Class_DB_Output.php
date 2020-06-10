@@ -66,7 +66,8 @@
             return $resultsString;
         }
 
-        protected function Results2Form($dbQueryResult) { # Make FieldNames & Values Dynamic            
+        protected function Results2Form($dbQueryResult) { # Make FieldNames & Values Dynamic  
+            $resultsString="";            
             if ($this->queryResult->num_rows > 0) {
                 $resultsStructure=$this->queryResult->fetchAll();
                 $resultsString="<table>";
@@ -84,7 +85,8 @@
             }
         }
 
-        protected function Results2JSon($dbQueryResult) { # Make FieldNames & Values Dynamic            
+        protected function Results2JSon($dbQueryResult) { # Make FieldNames & Values Dynamic  
+            $resultsString="";            
             if ($this->queryResult->num_rows > 0) {
                 $resultsStructure=$this->queryResult->fetchAll();
                 $resultsString="<table>";
@@ -102,7 +104,8 @@
             }
         }
 
-        protected function Results2Xml($dbQueryResult) { # Make FieldNames & Values Dynamic            
+        protected function Results2Xml($dbQueryResult) { # Make FieldNames & Values Dynamic  
+            $resultsString="";            
             if ($this->queryResult->num_rows > 0) {
                 $resultsStructure=$this->queryResult->fetchAll();
                 $resultsString="<table>";
@@ -120,7 +123,8 @@
             }
         }
 
-        protected function Results2Other($dbQueryResult) { # Make FieldNames & Values Dynamic            
+        protected function Results2Other($dbQueryResult) { # Make FieldNames & Values Dynamic  
+            $resultsString="";            
             if ($this->queryResult->num_rows > 0) {
                 $resultsStructure=$this->queryResult->fetchAll();
                 $resultsString="<table>";
@@ -138,7 +142,8 @@
             }
         }
 
-        protected function Results2Error($dbQueryResult) { # Make FieldNames & Values Dynamic            
+        protected function Results2Error($dbQueryResult) { # Make FieldNames & Values Dynamic  
+            $resultsString="";            
             if ($this->queryResult->num_rows > 0) {
                 $resultsStructure=$this->queryResult->fetchAll();
                 $resultsString="<table>";

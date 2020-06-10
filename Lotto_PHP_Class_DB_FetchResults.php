@@ -5,26 +5,24 @@
         # Use on the calling File: include("class_lib.php");
         private $dbQueryResults;
         
-        function __construct($dbSqlStatement,$dbFetchType='FETCH_ASSOC') {        
-            $this->setQueryResults($dbSqlStatement,$dbFetchType);
+        function __construct($dbSqlStatement,$sqlQuery2run,$dbFetchType='FETCH_ASSOC') {        
+            $this->setQueryResults($dbSqlStatement,$sqlQuery2run,$dbFetchType);
         }
 
-        private function setQueryResults($dbSqlStatement,$dbFetchType) { # https://phpdelusions.net/pdo/fetch_modes
-            try {
-                $this->dbQueryResults=$dbSqlStatement->fetchAll(PDO::FETCH_ASSOC);
-            }
-            catch (Throwable $e) {
-                try {                        
+        private function setQueryResults($dbSqlStatement,$sqlQuery2run,$dbFetchType) { # https://phpdelusions.net/pdo/fetch_modes
+            switch ($sqlQuery2run) {
+                case 'query_select':
+                    $this->dbQueryResults=$dbSqlStatement->fetchAll(PDO::FETCH_ASSOC);
+                    break;
+                case 'query_insert':
                     $this->dbQueryResults = $dbSqlStatement->lastInsertId();
-                }
-                catch (Throwable $f) {
-                    try {
-                        $this->dbQueryResults = $dbSqlStatement->rowCount();
-                    }
-                    catch (Throwable $g) {
-                        $this->dbQueryResults = $dbSqlStatement->errorInfo();
-                    }
-                }
+                    break;
+                case 'query_update':
+                    $this->dbQueryResults = $dbSqlStatement->rowCount();
+                    break;
+                default: // Error
+                    $this->dbQueryResults = $dbSqlStatement->errorInfo();
+                    break;
             }
         }
 
@@ -36,11 +34,11 @@
             try {                        
                     $this->dbQueryResults = $dbSqlStatement->lastInsertId();
                 }
-            catch (Throwable $th) {
+            catch (Throwable $f) {
                 try {                        
                     $this->dbQueryResults = $dbSqlStatement->rowCount();
                 }
-                catch (Throwable $th) {
+                catch (Throwable $g) {
                     $this->dbQueryResults = $dbSqlStatement->errorInfo();
                 }
             }

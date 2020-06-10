@@ -14,39 +14,38 @@ class DB_Active {
 
     function __construct(){
         // Form Input
-        $postFormInput                   = $_POST;
-        $formInput                        = cleanHtmlInputArray($postFormInput);
-                
+        $postFormInput          = $_POST;
+        $formInput              = cleanHtmlInputArray($postFormInput);
+        
         // DB Connect Config
-        $dbConfigFile='Lotto_PHP_DB_Config.php';
+        $dbConfigFile           = 'Lotto_PHP_DB_Config.php';
         $dbName='db_lottery';
 
         // DB Queries Config
-        $queriesConfigFileName='Lotto_PHP_DB_Queries.php';
-        $dbFetchType='FETCH_ASSOC';
-        $inputSettingsObj = include($queriesConfigFileName);
+        $queriesConfigFileName  = 'Lotto_PHP_DB_Queries.php';
+        $dbFetchType            = 'FETCH_ASSOC';
+        $inputSettingsObj       = include($queriesConfigFileName);
+        $query2run              = '';
 
-        $this->setConnection($dbConfigFile,$dbName='db_lottery');
-        $query2run='';
         if($formInput){
             switch ($formInput["Request_Sender"]) {
                 case 'lotto_twitter_user_name':                                      
-                    $query2run              = 'sql_Input_TwitterUser';
+                    $query2run  = 'sql_Input_TwitterUser';
                     break;                
                 case 'lotto_draw_date':                                      
-                    $query2run              = 'sql_Input_DrawDate';
+                    $query2run  = 'sql_Input_DrawDate';
                     break;
                 case 'lotto_draw_type':                                      
-                    $query2run              = 'sql_Input_DrawType';
+                    $query2run  = 'sql_Input_DrawType';
                     break;               
                 case 'lotto_balls_signature':                                      
-                    $query2run              = 'sql_Input_BallSignature';
+                    $query2run  = 'sql_Input_BallSignature';
                     break;
                 case 'lotto_submit_entry':                                      
-                    $query2run              = 'sql_Input_BallSignature'; // *** Wanna Check this? ***
+                    $query2run  = 'sql_Input_BallSignature'; // *** Wanna Check this? ***
                     break;                
                 case 'lotto_submit':                                      
-                    $query2run              = 'sql_Input_SubmitAll';
+                    $query2run  = 'sql_Input_SubmitAll';
                     break;
                 default:
                     # Unknown Request
@@ -54,15 +53,17 @@ class DB_Active {
             }
         }
         
-        $sqlQueryType2run                      = 'query_select';
-        $this->query2action($formInput,$query2run,$sqlQueryType2run,$queriesConfigFileName,$dbFetchType);
-        $itemsReturned = count($this->dbFetchResults);
+        $this->setConnection($dbConfigFile,$dbName='db_lottery');
+
+        $sqlQueryType2run       = 'query_select';
+        $this->query2action($formInput,$query2run,$sqlQueryType2run,$queriesConfigFileName,$dbFetchType);        
+        $itemsReturned          = count($this->dbFetchResults);
         if ($itemsReturned <= 0) {
-            $sqlQueryType2run                  = 'query_insert';
+            $sqlQueryType2run   = 'query_insert';
             $this->query2action($formInput,$query2run,$sqlQueryType2run,$queriesConfigFileName,$dbFetchType);
         }
         else {
-            $sqlQueryType2run                  = 'query_update';
+            $sqlQueryType2run   = 'query_update';
             // Not updatable: Twitter User,
             $this->query2action($formInput,$query2run,$sqlQueryType2run,$queriesConfigFileName,$dbFetchType);
         }
@@ -71,33 +72,33 @@ class DB_Active {
     
     private function query2action($formInput,$query2run,$sqlQueryType2run,$queriesConfigFileName,$dbFetchType) {
         $this->setStatement($formInput,$query2run,$sqlQueryType2run,$queriesConfigFileName);
-        $this->setFetchResults($this->dbStatement, $dbFetchType);
+        $this->setFetchResults($this->dbStatement,$query2run, $dbFetchType);
     }
-
+    
     private function setConnection($inputDbConfigFile='Lotto_PHP_DB_Config.php',$inputDbName='db_lottery'){
-        $holderConnection=New DB_Connection($inputDbConfigFile,$inputDbName);
-        $this->dbConnection=$holderConnection->getConnection();
+        $holderConnection       = New DB_Connection($inputDbConfigFile,$inputDbName);
+        $this->dbConnection     = $holderConnection->getConnection();
     }
 
     private function setStatement($formInput,$sql_QueryName,$sqlQueryType2run='query_select',$dbQueryFileName = 'Lotto_PHP_DB_Queries.php'){
-        $dbQueryFileObj                           = include($dbQueryFileName);
-        $sqlQuery2run                             = $dbQueryFileObj[$sql_QueryName];
-        $formInput['lotto_reg_date']              = date("Y-m-d H:i:s");
-        $formInput['lotto_ip_address']            = getUserIpAddress();
-        $formInput['lotto_submit_entry']          = 1;
+        $dbQueryFileObj                     = include($dbQueryFileName);
+        $sqlQuery2run                       = $dbQueryFileObj[$sql_QueryName];
+        $formInput['lotto_reg_date']        = date("Y-m-d H:i:s");
+        $formInput['lotto_ip_address']      = getUserIpAddress();
+        $formInput['lotto_submit_entry']    = 1;
         
-        $statement2Check=New DB_Statement($this->dbConnection,$formInput, $sqlQuery2run, $sqlQueryType2run);
-        $this->dbStatement=$statement2Check->getStatement();        
+        $statement2Check                    = New DB_Statement($this->dbConnection,$formInput, $sqlQuery2run, $sqlQueryType2run);
+        $this->dbStatement                  = $statement2Check->getStatement();        
     }    
 
-    private function setFetchResults($inputStatement, $dbFetchType){
-        $holderFetchResults=New DB_FetchResults($inputStatement, $dbFetchType);
-        $this->dbFetchResults=$holderFetchResults->getQueryResults();
+    private function setFetchResults($inputStatement,$query2run, $dbFetchType){
+        $holderFetchResults     = New DB_FetchResults($inputStatement,$query2run, $dbFetchType);
+        $this->dbFetchResults   = $holderFetchResults->getQueryResults();
     }
 
     private function setOutput($inputDbQueryResult,$inputDbFormat='table'){
-        $holderOutput=New DB_Output($inputDbQueryResult,$inputDbFormat);
-        $this->dbOutput=$holderOutput->getOutput();
+        $holderOutput   = New DB_Output($inputDbQueryResult,$inputDbFormat);
+        $this->dbOutput = $holderOutput->getOutput();
     }
 
     public function getConnection(){
